@@ -1,4 +1,4 @@
-#An easy-to-implement and extendable discord bot written in JavaScript
+# An easy-to-implement and extendable discord bot written in JavaScript
 
 #### First you have to configure the bot
 
