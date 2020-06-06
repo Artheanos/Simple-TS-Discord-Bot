@@ -5,7 +5,7 @@
 * Go to the project folder
 * Edit `config/config.json` file
 
-```json
+```js
 {
   "prefix": "$",          //Only commands following the prefix will work
   "token": "1234",        //Your Bot's Token
