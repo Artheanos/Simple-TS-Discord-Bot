@@ -13,7 +13,7 @@
   "caseSensitive": false  //Replace with true if you want the commands to be case sensitive
 }
 ```
-Note that if you don't specify your discord ID, "ownerOnly" commands won't work
+Note that if you don't specify ownerId, "ownerOnly" commands won't work
 * Install dependencies `npm install`
 * Go to the src/bot folder
 * Run the app `node app.js`
