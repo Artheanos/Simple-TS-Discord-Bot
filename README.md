@@ -1,11 +1,12 @@
 # An easy-to-implement and extendable discord bot written in JavaScript
-
+Setup
+---
 #### First you have to configure the bot
 
 * Go to the project folder
 * Edit `config/config.json` file
 
-```js
+```json5
 {
   "prefix": "$",          //Only commands following the prefix will work
   "token": "1234",        //Your Bot's Token
@@ -14,16 +15,17 @@
 }
 ```
 Note that if you don't specify ownerId, "ownerOnly" commands won't work
-* Install dependencies `npm install`
+* Install dependencies - run `npm install` while in the project's folder
 * Go to the src/bot folder
 * Run the app `node app.js`
 #### The bot should be running now
 
+Censor List
 ---
 `bot/config/censor_list.json` contains guilds and channels with banned words
 
 The structure is as follows
-```js
+```json5
 {
   "guildId": {
     "textChannelId": [
@@ -37,7 +39,7 @@ You can also replace guild id or text channel id with and asterisk `*`.
 If you do so then its value will be applied to any guild id / text channel id that **has not** been matched
 
 Example `censor_list.json`
-```js
+```json5
 {
  // This guild will be banning "bad_word" and "another_bad_word" on every text channel except for 207085530130229581
  "067680738097511020": { 
@@ -45,9 +47,25 @@ Example `censor_list.json`
      "bad_word",
      "another_bad_word"
    ],
-   "207085530130229581": [] 
+   "207085530130229581": []
  }
 }
 ```
-
 ###### Regex coming soon...
+
+Adding your own commands
+---
+`src/bot/funcs.js` contains a json with all the commands.
+
+You just have to add your function like so
+```js
+module.exports = {
+    /*
+    ...
+    */
+    'say_hello': function(msg) {
+        msg.reply("Hello!");
+    }
+}
+```
+Note your function will be called with one argument - a discord message object
