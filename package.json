@@ -1,0 +1,8 @@
+{
+  "name": "my_bot_js",
+  "version": "1.0.0",
+  "dependencies": {
+    "bent": "^7.3.2",
+    "discord.js": "^12.2.0"
+  }
+}
