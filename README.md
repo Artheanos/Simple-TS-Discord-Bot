@@ -7,10 +7,10 @@
 
 ```json
 {
-  "prefix": "$",          Only commands following the prefix will work
-  "token": "1234",        Your Bot's Token
-  "ownerId": "4321",      Your discord account ID
-  "caseSensitive": false  Replace with true if you want the commands to be case sensitive
+  "prefix": "$",          // "Only commands following that prefix will work"
+  "token": "1234",        // "Your Bot's Token"
+  "ownerId": "4321",      // "Your discord account ID"
+  "caseSensitive": false  // "Replace with true if you want the commands to be case sensitive"
 }
 ```
 Note that if you don't specify your discord ID, "ownerOnly" commands won't work
