@@ -34,7 +34,7 @@ The structure is as follows
   }
 }
 ```
-You can also replace guild id or text channel id with and asterisk `*`.
+You can also replace guild id or text channel id with an asterisk `*`.
 
 If you do so then its value will be applied to any guild id / text channel id that **has not** been matched
 
