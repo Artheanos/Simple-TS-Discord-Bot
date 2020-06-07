@@ -2,10 +2,11 @@ const Discord = require('discord.js');
 
 const config = require('../config/config.json');
 const defaultPresence = require('../config/default_presence.json');
-const funcs = require('./funcs');
+const Commands = require('./commands');
 const censor = require('./censor');
 
 const client = new Discord.Client();
+const commands = Commands(client);
 
 client.on('ready', () => {
     client.user.setPresence(defaultPresence).catch(console.error);
@@ -20,15 +21,7 @@ client.on('message', msg => {
     if (censor(msg))
         return;
 
-    if (msg.content.startsWith(config['prefix'])) {
-        let command = msg.content.split(' ')[0].slice(config['prefix'].length);
-        if (!config.caseSensitive)
-            command = command.toLowerCase();
-
-        if (funcs.hasOwnProperty(command)) {
-            funcs[command](msg);
-        }
-    }
+    commands(msg);
 });
 
 client.login(config['token']);

@@ -55,11 +55,11 @@ Example `censor_list.json`
 
 Adding your own commands
 ---
-`src/bot/funcs.js` contains a json with all the commands.
+`src/bot/commands.js` contains a json `commandList` with all the commands.
 
 You just have to add your function like so
 ```js
-module.exports = {
+let commandList = {
     /*
     ...
     */
@@ -68,4 +68,4 @@ module.exports = {
     }
 }
 ```
-Note your function will be called with one argument - a discord message object
+Note that your function will be called with one argument - a discord message object

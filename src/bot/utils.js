@@ -1,12 +1,12 @@
-exports.MyRandom = new function () {
-    this.choice = function (array) {
-        return array[this.int(array.length - 1)]
-    }
+exports.MyRandom = {
+    choice(array) {
+        if (array.length)
+            return array[this.int(array.length - 1)]
+    },
 
-    this.int = function (min, max) {
+    int(min, max) {
         if (max === undefined) {
-            max = min;
-            min = 0;
+            [min, max] = [0, min];
         }
         return Math.random() * (max - min + 1) + min >> 0;
     }
