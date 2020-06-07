@@ -41,7 +41,7 @@ If you do so then its value will be applied to any guild id / text channel id th
 Example `censor_list.json`
 ```json5
 {
- // This guild will be banning "bad_word" and a message with 7 consecutive characters 
+ // This guild will be banning "bad_word" and messages containing 7 consecutive characters 
  // on every text channel except for 207085530130229581
  "067680738097511020": { 
    "*": [
