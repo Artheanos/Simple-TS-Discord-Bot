@@ -1,6 +1,5 @@
 const {MyRandom, Utils} = require("./utils");
 const ownerId = require("../config/config.json").ownerId;
-const http = require('bent');
 
 function ownerOnly(wrapped) {
     return function (msg) {
@@ -81,9 +80,5 @@ module.exports = {
         } else {
             msg.channel.send('Wrong number of arguments');
         }
-    },
-
-    'idk': function () {
-        let x = http.get('www.google.pl')
     }
 }

@@ -16,7 +16,7 @@ module.exports = function censor(msg) {
 
         if (banned_words) {
             for (let i of banned_words) {
-                if (msg.content.includes(i)) {
+                if (new RegExp(i).test(msg)) {
                     msg.delete({reason: 'contains banned word \"`${i}`\"'});
                     return true;
                 }
