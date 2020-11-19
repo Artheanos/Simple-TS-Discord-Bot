@@ -1,11 +1,14 @@
-const censor_list = require('../config/censor_list.json')
+import {Message} from 'discord.js';
+import {censorList} from '../config';
 
-
-module.exports = function censor(msg) {
+export default function censor(msg: Message) {
     let deleted = false;
 
-    if (msg.guild.id in censor_list || "*" in censor_list) {
-        let guild = censor_list[msg.guild.id];
+    if (!msg.guild)
+        return;
+
+    if (msg.guild.id in censorList || "*" in censorList) {
+        let guild = censorList[msg.guild.id];
 
         let banned_words;
         if (msg.channel.id in guild) {
@@ -16,7 +19,7 @@ module.exports = function censor(msg) {
 
         if (banned_words) {
             for (let i of banned_words) {
-                if (new RegExp(i).test(msg)) {
+                if (new RegExp(i).test(msg.content)) {
                     msg.delete({reason: 'contains banned word \"`${i}`\"'});
                     return true;
                 }

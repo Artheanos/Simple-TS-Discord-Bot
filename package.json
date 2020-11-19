@@ -1,8 +1,31 @@
 {
   "name": "my_bot_js",
   "version": "1.0.0",
+  "description": "Simple discord bot",
+  "main": "dist/index.js",
+  "scripts": {
+    "watch": "node_modules/.bin/tsc -w",
+    "build": "node_modules/.bin/tsc",
+    "start": "node dist/bot/app.js",
+    "build-start": "npm run build && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Artheanos/Simple-JS-Discord-Bot.git"
+  },
+  "author": "Jan Pieczul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Artheanos/Simple-JS-Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/Artheanos/Simple-JS-Discord-Bot#readme",
   "dependencies": {
-    "bent": "^7.3.2",
-    "discord.js": "^12.2.0"
+    "bent": "^7.3.12",
+    "discord.js": "^12.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.7",
+    "@types/ws": "^7.4.0",
+    "typescript": "^4.0.5"
   }
 }

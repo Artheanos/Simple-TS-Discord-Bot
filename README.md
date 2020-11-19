@@ -16,8 +16,8 @@ Setup
 ```
 Note that if you don't specify ownerId, "ownerOnly" commands won't work
 * Install dependencies - run `npm install` while in the project's folder
-* Go to the src/bot folder
-* Run the app `node app.js`
+* Compile js - `npm run build`
+* Run it! - `npm start`
 #### The bot should be running now
 
 Censor List
@@ -55,17 +55,15 @@ Example `censor_list.json`
 
 Adding your own commands
 ---
-`src/bot/commands.js` contains a json `commandList` with all the commands.
+`src/bot/commands` folder contains the bot's commands. File name is also the command's name.
 
-You just have to add your function like so
-```js
-let commandList = {
-    /*
-    ...
-    */
-    'say_hello': function(msg) {
-        msg.reply("Hello!");
-    }
+See `src/bot/commands/test.ts` for a 'Hello World' example
+```ts
+export default function ({message}: IMessageProps) {
+    message.channel.send('Hello World');
 }
 ```
-Note that your function will be called with one argument - a discord message object
+
+All you have to do is create a new file and export your function as default. 
+
+Your function will be called with an argument of `IMessageProps` type.

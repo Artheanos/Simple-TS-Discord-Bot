@@ -1,0 +1,7 @@
+package-lock.json
+
+dist/**/*
+.vscode/
+node_modules/
+.idea/
+test/
