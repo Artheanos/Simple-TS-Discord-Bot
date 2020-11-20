@@ -20,3 +20,5 @@ function main({message, args}: IMessageProps) {
         message.channel.send('Wrong number of arguments', {spoiler: true} as MessageAttachment);
     }
 }
+
+export default main;

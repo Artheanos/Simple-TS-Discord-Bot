@@ -1,13 +1,14 @@
 import {configFile} from '../../config';
 import {Client, Message, MessageEmbed, TextChannel} from "discord.js";
-import {readdir} from 'fs';
+import {readdir, readdirSync} from 'fs';
 
 export function ownerOnly(wrapped: IMessageFunction): IMessageFunction {
-    return function (props) {
-        const {message} = props;
-        if (message.author.id === configFile.ownerId)
+    function ownerOnlyFunction(props: IMessageProps) {
+        if (props.message.author.id === configFile.ownerId)
             wrapped(props);
     }
+
+    return ownerOnlyFunction;
 }
 
 export type IMessageProps = {
@@ -21,18 +22,16 @@ let commandList: { [key: string]: IMessageFunction } = {};
 let client: Client | null = null;
 
 
-readdir(__dirname, (err, files) => {
-    for (let file of files) {
-        file = file.substr(0, file.length - 3);
-        if (file == 'index')
-            continue;
-        let module = require('./' + file);
-        if ('default' in module) {
-            commandList[file] = module.default;
-        }
+for (let file of readdirSync(__dirname)) {
+    file = file.substr(0, file.length - 3);
+    if (file == 'index')
+        continue;
+    let module = require('./' + file);
+    if ('default' in module) {
+        commandList[file] = module.default;
     }
-    console.log(commandList);
-});
+}
+console.log(commandList);
 
 function commands(inp: Client | Message) {
     if (inp instanceof Client) {
@@ -48,7 +47,15 @@ function commands(inp: Client | Message) {
         if (!configFile.caseSensitive)
             command = command.toLowerCase();
 
-        if (command in commandList) {
+        if (command === 'help') {
+            console.log('HELP')
+            let result = 'Available commands are:\n`';
+            for (let i in commandList) {
+                result += i + ' ';
+            }
+            result += '`\nPrefix - `' + configFile.prefix + '`';
+            message.channel.send(result);
+        } else if (command in commandList) {
             let args = message.content.split(' ').slice(1);
             commandList[command]({message, args, client});
         }
