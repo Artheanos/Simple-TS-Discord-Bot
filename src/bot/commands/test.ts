@@ -1,6 +1,9 @@
-import {Message} from "discord.js";
-import {IMessageProps} from "./index";
+import {MyCommandProps, MyCommand} from "./index";
 
-export default function ({message}: IMessageProps) {
-    message.channel.send('Hello World');
+export default class _ implements MyCommand {
+    docs = "Test me!";
+
+    handleMessage({message}: MyCommandProps) {
+        message.channel.send('Hello World')
+    }
 }

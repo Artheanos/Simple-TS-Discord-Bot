@@ -1,7 +1,10 @@
-import {ownerOnly, IMessageProps} from "./index";
+import {MyCommandProps, MyCommand, ownerOnly} from "./index";
 
-function main({client}: IMessageProps) {
-    client.destroy();
+@ownerOnly
+export default class _ implements MyCommand {
+    docs = "Bye bye";
+
+    handleMessage({client}: MyCommandProps) {
+        client.destroy();
+    }
 }
-
-export default ownerOnly(main);

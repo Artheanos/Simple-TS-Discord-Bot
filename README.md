@@ -64,6 +64,7 @@ export default function ({message}: IMessageProps) {
 }
 ```
 
-All you have to do is create a new file and export your function as default. 
+All you have to do is create a new file and export a class as default.
+Make sure your class implements `MyCommand`
 
 Your function will be called with an argument of `IMessageProps` type.

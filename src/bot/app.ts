@@ -9,9 +9,8 @@ commands(client);
 
 
 client.on('ready', () => {
-    console.log('Ready');
     client.user!.setPresence(defaultPresence as discord.PresenceData).catch(console.error);
-    console.log('Ready2');
+    console.log('Ready');
 });
 
 client.on('message', msg => {
@@ -26,5 +25,3 @@ client.on('message', msg => {
 });
 
 client.login(configFile.token);
-
-console.log('Ended');

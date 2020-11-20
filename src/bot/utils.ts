@@ -1,5 +1,5 @@
 const MyRandom = {
-    choice(array: Array<any>) {
+    choice(array: any[]) {
         if (array.length)
             return array[this.int(array.length - 1)]
     },
@@ -13,7 +13,7 @@ const MyRandom = {
 }
 
 const Utils = {
-    removeFromArray(arr: Array<any>, needle: any) {
+    removeFromArray<T>(arr: T[], needle: T) {
         let index = arr.indexOf(needle);
         if (index !== -1)
             arr.splice(index, 1);

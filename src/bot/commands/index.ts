@@ -2,25 +2,33 @@ import {configFile} from '../../config';
 import {Client, Message} from "discord.js";
 import {readdirSync} from 'fs';
 
-export function ownerOnly(wrapped: IMessageFunction): IMessageFunction {
-    function ownerOnlyFunction(props: IMessageProps) {
+function ownerOnlyFunction(wrapped: ICommandFunction): (props: MyCommandProps) => void {
+    return (props: MyCommandProps) => {
         if (props.message.author.id === configFile.ownerId)
             wrapped(props);
     }
-
-    return ownerOnlyFunction;
 }
 
-export type IMessageProps = {
+export function ownerOnly<T extends { new(...args: any[]): {} }>(constructor: T) {
+    constructor.prototype.handleMessage = ownerOnlyFunction(constructor.prototype.handleMessage);
+}
+
+export interface MyCommand {
+    docs: string,
+    commandName?: string,
+
+    handleMessage(props: MyCommandProps): void;
+}
+
+export type MyCommandProps = {
     message: Message,
-    args: Array<string>,
+    args: string[],
     client: Client
 }
-type IMessageFunction = (props: IMessageProps) => void;
 
-let commandList: { [key: string]: IMessageFunction } = {};
+type ICommandFunction = (props: MyCommandProps) => void;
 let client: Client | null = null;
-
+let commandList: { [key: string]: MyCommand } = {};
 
 for (let file of readdirSync(__dirname)) {
     file = file.substr(0, file.length - 3);
@@ -28,10 +36,31 @@ for (let file of readdirSync(__dirname)) {
         continue;
     let module = require('./' + file);
     if ('default' in module) {
-        commandList[file] = module.default;
+        commandList[file] = new module.default;
     }
 }
 console.log(commandList);
+
+commandList.help = new class implements MyCommand {
+    docs = `Help yourself`;
+
+    handleMessage({message, args}: MyCommandProps) {
+        let result: string;
+
+        if (args.length) {
+            let command = args[0];
+            if (command in commandList) {
+                result = commandList[command].docs;
+            } else {
+                result = `There\'s no command \`{}\``
+            }
+        } else {
+            result = `Available commands are:\n${Object.keys(commandList).map(c => `\`${c}\``).join(' ')}\nGet a command\'s docs, usage: \`${configFile.prefix}help command\``;
+        }
+
+        message.channel.send(result);
+    }
+}
 
 function commands(inp: Client | Message) {
     if (inp instanceof Client) {
@@ -39,26 +68,17 @@ function commands(inp: Client | Message) {
     } else if (client === null) {
         throw new TypeError("Message was passed but Client is null");
     } else {
-        let message = inp;
+        const message = inp;
         if (!message.content.startsWith(configFile.prefix))
             return;
 
-        let command = message.content.split(' ')[0].slice(configFile.prefix.length);
+        let [command, ...args] = message.content.split(' ');
+        command = command.slice(configFile.prefix.length);
+
         if (!configFile.caseSensitive)
             command = command.toLowerCase();
 
-        if (command === 'help') {
-            console.log('HELP')
-            let result = 'Available commands are:\n`';
-            for (let i in commandList) {
-                result += i + ' ';
-            }
-            result += '`\nPrefix - `' + configFile.prefix + '`';
-            message.channel.send(result);
-        } else if (command in commandList) {
-            let args = message.content.split(' ').slice(1);
-            commandList[command]({message, args, client});
-        }
+        commandList[command].handleMessage({message, args, client});
     }
 }
 
