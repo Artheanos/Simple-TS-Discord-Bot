@@ -13,7 +13,7 @@ const MyRandom = {
 }
 
 const Utils = {
-    removeFromArray(arr: Array<any>, needle: (typeof arr[0])) {
+    removeFromArray(arr: Array<any>, needle: any) {
         let index = arr.indexOf(needle);
         if (index !== -1)
             arr.splice(index, 1);

@@ -1,6 +1,6 @@
 import {configFile} from '../../config';
-import {Client, Message, MessageEmbed, TextChannel} from "discord.js";
-import {readdir, readdirSync} from 'fs';
+import {Client, Message} from "discord.js";
+import {readdirSync} from 'fs';
 
 export function ownerOnly(wrapped: IMessageFunction): IMessageFunction {
     function ownerOnlyFunction(props: IMessageProps) {
