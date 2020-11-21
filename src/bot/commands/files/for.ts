@@ -1,7 +1,6 @@
 import {MyCommand, MyCommandProps} from "../MyCommand";
 import {blacklist} from "../decorators";
 
-@blacklist(['505868202048487425'])
 export default class implements MyCommand {
     about = "For loop, takes two arguments";
 

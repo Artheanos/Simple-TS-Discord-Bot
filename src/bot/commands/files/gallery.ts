@@ -2,7 +2,6 @@ import {MessageEmbed} from "discord.js";
 import {MyCommand, MyCommandProps} from "../MyCommand";
 import {whitelist} from "../decorators";
 
-@whitelist(['517003565076578340'])
 export default class implements MyCommand {
     about = "Display a photo, navigate using arrow emojis";
 

@@ -20,7 +20,7 @@ export function blacklist(roles?: string[], ids?: string[]) {
                 tmp(props);
             } else {
                 props.message.channel.send('You were blacklisted').then((msg) => {
-                    msg.delete({timeout: 2000})
+                    msg.delete({timeout: 4000})
                 });
             }
         }
@@ -37,7 +37,7 @@ export function whitelist(roles?: string[], ids?: string[]) {
                 tmp(props);
             } else {
                 props.message.channel.send('You are not in the whitelist').then((msg) => {
-                    msg.delete({timeout: 2000})
+                    msg.delete({timeout: 4000})
                 });
             }
         }

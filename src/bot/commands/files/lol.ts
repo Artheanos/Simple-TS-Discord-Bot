@@ -2,7 +2,6 @@ import {MyCommand, MyCommandProps} from "../MyCommand";
 import {MyRandom, Utils} from "../../utils";
 import {whitelist} from "../decorators";
 
-@whitelist(['505868202048487425'])
 export default class implements MyCommand {
     about = "PseudoRandom LoL role generator";
     alias = ["lolek"];
