@@ -4,4 +4,3 @@ dist/**/*
 .vscode/
 node_modules/
 .idea/
-test/
