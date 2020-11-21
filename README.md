@@ -59,12 +59,16 @@ Adding your own commands
 
 See `src/bot/commands/test.ts` for a 'Hello World' example
 ```ts
-export default function ({message}: IMessageProps) {
-    message.channel.send('Hello World');
+export default class implements MyCommand {
+    about = "Test me!";
+
+    handleMessage({message, args, client}: MyCommandProps) {
+        message.channel.send('Hello world!');
+    }
 }
 ```
 
 All you have to do is create a new file and export a class as default.
 Make sure your class implements `MyCommand`
 
-Your function will be called with an argument of `IMessageProps` type.
+Your `handleMessage` method will be called with an argument of `IMessageProps` type.
