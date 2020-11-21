@@ -1,9 +1,10 @@
-import {TextChannel, Message} from "discord.js";
-import {MyCommandProps, MyCommand, ownerOnly} from '.';
+import { TextChannel } from "discord.js";
+import {ownerOnly} from "../decorators";
+import {MyCommand, MyCommandProps} from "../MyCommand";
 
 @ownerOnly
-export default class _ implements MyCommand {
-    docs = "Deletes as many messages as you'd like";
+export default class implements MyCommand {
+    about = "Deletes as many messages as you'd like";
 
     handleMessage({message}: MyCommandProps) {
         if (!(message.channel instanceof TextChannel))

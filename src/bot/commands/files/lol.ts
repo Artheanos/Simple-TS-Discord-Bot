@@ -1,8 +1,11 @@
-import {MyRandom, Utils} from "../utils";
-import {MyCommandProps, MyCommand} from "./index";
+import {MyCommand, MyCommandProps} from "../MyCommand";
+import {MyRandom, Utils} from "../../utils";
+import {whitelist} from "../decorators";
 
-export default class _ implements MyCommand {
-    docs = "PseudoRandom LoL role generator";
+@whitelist(['505868202048487425'])
+export default class implements MyCommand {
+    about = "PseudoRandom LoL role generator";
+    alias = ["lolek"];
 
     handleMessage({message}: MyCommandProps) {
         let lanes = ['Top', 'Middle', 'Bottom', 'Support', 'Jungle'];

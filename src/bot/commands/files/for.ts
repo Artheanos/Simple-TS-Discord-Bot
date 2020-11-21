@@ -1,8 +1,9 @@
-import {MessageAttachment, Message} from "discord.js";
-import {MyCommandProps, MyCommand} from "./index";
+import {MyCommand, MyCommandProps} from "../MyCommand";
+import {blacklist} from "../decorators";
 
-export default class _ implements MyCommand {
-    docs = "For loop, takes two arguments";
+@blacklist(['505868202048487425'])
+export default class implements MyCommand {
+    about = "For loop, takes two arguments";
 
     handleMessage({message, args}: MyCommandProps): void {
         if (args.length === 2) {
@@ -20,7 +21,7 @@ export default class _ implements MyCommand {
 
             message.channel.send(result);
         } else {
-            message.channel.send('Wrong number of arguments', {spoiler: true} as MessageAttachment);
+            message.channel.send('Wrong number of arguments');
         }
     }
 }
