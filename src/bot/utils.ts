@@ -1,3 +1,5 @@
+import {DMChannel, NewsChannel, TextChannel} from "discord.js";
+
 const MyRandom = {
     choice(array: any[]) {
         if (array.length)
@@ -20,4 +22,12 @@ const Utils = {
     }
 }
 
-export {MyRandom, Utils};
+type SendableChannel = TextChannel | DMChannel | NewsChannel;
+
+function tmpSend(channel: SendableChannel, messageContent: string, deleteAfter: number) {
+    channel.send(messageContent).then(msg => {
+        msg.delete({timeout: deleteAfter}).then();
+    })
+}
+
+export {MyRandom, Utils, tmpSend, SendableChannel};
