@@ -1,4 +1,4 @@
-# This is a simple discord bot written in JavaScript
+# This is a simple discord bot written in ~~JavaScript~~ TypeScript
 Setup
 ---
 #### First you have to configure the bot
