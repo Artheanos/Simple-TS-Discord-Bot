@@ -1,7 +1,0 @@
-{
-  "prefix": "$",
-  "token": "1234",
-  "ownerId": "4321",
-  "caseSensitive": false,
-  "unknownCommandMessage": true
-}

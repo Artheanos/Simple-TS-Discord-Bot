@@ -1,6 +1,7 @@
 package-lock.json
 
-dist/**/*
+dist/
 .vscode/
 node_modules/
 .idea/
+config/config.json
