@@ -71,4 +71,6 @@ export default class implements MyCommand {
 All you have to do is create a new file and export a class as default.
 Make sure your class implements `MyCommand`
 
-Your `handleMessage` method will be called with an argument of `IMessageProps` type.
+Your `handleMessage` method will be called with an argument of `MyCommandProps` type.
+
+`ffmpeg`

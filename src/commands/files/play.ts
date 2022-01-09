@@ -9,8 +9,7 @@ import { MyCommand, MyCommandProps } from "interfaces/MyCommand";
 import { joinVoice } from "../../services/joinVoice";
 import { isValidURL } from "../../utils";
 import { downloadSong } from "../../lib/youtubeDownloader";
-
-const guildPlayers: Record<string, AudioPlayer> = {}
+import { GuildStorage } from "../../lib/guildStorage";
 
 const findOrCreatePlayer = (guildId: string): AudioPlayer => {
   const connection = getVoiceConnection(guildId)
@@ -19,19 +18,20 @@ const findOrCreatePlayer = (guildId: string): AudioPlayer => {
     throw 'Connection not found'
   }
 
+  const guildExtension = GuildStorage.getGuildExtension(guildId);
   connection.on('stateChange', (oldState, newState) => {
     if (newState.status === 'disconnected' || newState.status === 'destroyed') {
-      delete guildPlayers[guildId]
+      delete guildExtension.player
     }
   })
 
-  if (!guildPlayers[guildId]) {
+  if (!guildExtension.player) {
     const player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Pause, }, });
     connection?.subscribe(player)
-    guildPlayers[guildId] = player
+    guildExtension.player = player
   }
 
-  return guildPlayers[guildId]
+  return guildExtension.player
 }
 
 
