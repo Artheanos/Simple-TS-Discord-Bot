@@ -12,6 +12,8 @@ const client = new Discord.Client({
     Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
     Discord.Intents.FLAGS.DIRECT_MESSAGES,
     Discord.Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+    Discord.Intents.FLAGS.GUILD_VOICE_STATES,
+    Discord.Intents.FLAGS.GUILD_WEBHOOKS,
   ]
 })
 commands(client);

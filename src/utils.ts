@@ -24,8 +24,18 @@ const Utils = {
 
 function tmpSend(channel: TextBasedChannel, messageContent: string, deleteAfter: number) {
   channel.send(messageContent).then(msg => {
-    setTimeout(msg.delete, deleteAfter)
+    setTimeout(() => msg.delete(), deleteAfter)
   })
 }
 
-export { MyRandom, Utils, tmpSend };
+function isValidURL(url: string) {
+  try {
+    new URL(url)
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+
+export { MyRandom, Utils, tmpSend, isValidURL };
