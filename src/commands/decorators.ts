@@ -21,7 +21,7 @@ export function blacklist(roles?: string[], ids?: string[]) {
         superMethod(props)
       } else {
         props.message.channel.send('You were blacklisted').then((msg) => {
-          setTimeout(msg.delete, 4000)
+          setTimeout(() => msg.delete(), 4000)
         });
       }
     }
@@ -38,7 +38,7 @@ export function whitelist(roles?: string[], ids?: string[]) {
         cachedMethod(props);
       } else {
         props.message.channel.send('You are not in the whitelist').then((msg) => {
-          setTimeout(msg.delete, 4000)
+          setTimeout(() => msg.delete(), 4000)
         });
       }
     }

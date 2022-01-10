@@ -1,5 +1,4 @@
 import { MyCommand, MyCommandProps } from "interfaces/MyCommand";
-import { MyRandom, Utils } from "../../utils";
 import { getVoiceConnection } from "@discordjs/voice";
 
 export default class implements MyCommand {

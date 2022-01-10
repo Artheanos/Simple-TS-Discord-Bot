@@ -3,7 +3,7 @@ import { GuildStorage } from "../../lib/guildStorage";
 
 export default class implements MyCommand {
   about = 'Skip current track'
-  alias = ['next']
+  alias = ['next', 's']
 
   handleMessage({ message }: MyCommandProps) {
     if (!message.guildId) {

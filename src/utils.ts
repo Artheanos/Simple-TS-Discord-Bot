@@ -22,10 +22,10 @@ const Utils = {
   }
 }
 
-function tmpSend(channel: TextBasedChannel, messageContent: string, deleteAfter: number) {
-  channel.send(messageContent).then(msg => {
-    setTimeout(() => msg.delete(), deleteAfter)
-  })
+async function tmpSend(channel: TextBasedChannel, messageContent: string, deleteAfter: number) {
+  const msg = await channel.send(messageContent)
+  setTimeout(() => msg.delete(), deleteAfter)
+  return msg
 }
 
 function isValidURL(url: string) {
@@ -41,5 +41,9 @@ function enumerateArray(arr: string[]) {
   return arr.map((v, i) => `${i + 1}. ${v}`).join('\n')
 }
 
+function initArray<T>(length: number, map: (i: number) => T) {
+  return new Array(length).fill(undefined).map(map)
+}
 
-export { MyRandom, Utils, tmpSend, isValidURL, enumerateArray };
+
+export { MyRandom, Utils, tmpSend, isValidURL, enumerateArray, initArray };

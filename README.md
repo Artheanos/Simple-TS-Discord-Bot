@@ -1,6 +1,7 @@
 # This is a simple discord bot written in TypeScript
 Setup
 ---
+`yt-dlp` is required to play songs from Youtube
 #### First you have to configure the bot
 
 * Go to the project folder
@@ -15,9 +16,10 @@ Setup
 }
 ```
 Note that if you don't specify ownerId, "ownerOnly" commands won't work
-* Install dependencies - run `npm install` while in the project's folder
-* Compile js - `npm run build`
-* Run it! - `npm start`
+* Install dependencies - run `yarn` while in the project's folder
+* Compile js - `yarn build`
+* Run it! - `yarn start`
+
 #### The bot should be running now
 
 Censor List
@@ -73,4 +75,3 @@ Make sure your class implements `MyCommand`
 
 Your `handleMessage` method will be called with an argument of `MyCommandProps` type.
 
-`ffmpeg`

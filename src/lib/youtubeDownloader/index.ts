@@ -1,6 +1,7 @@
 import { exec } from 'child_process'
 import { join } from 'path'
 import { getCachePathByUrl } from "./findCache";
+import { FriendlyError } from "../../FriendlyError";
 
 const cachePath = join(__dirname, 'cache')
 const fileNameTemplate = '%(id)s_%(title)s.%(ext)s'
@@ -14,22 +15,23 @@ type DownloadError = 'unavailable' | 'notFound' | 'unknown'
 
 
 export const downloadSong = (url: string) => {
-  return new Promise((resolve: (outputPath: string) => void, reject: (value: DownloadError) => void) => {
-
+  return new Promise((resolve: (outputPath: string) => void, reject: (value: FriendlyError) => void) => {
     const cachedSongPath = getCachePathByUrl(url)
     if (cachedSongPath) {
       return resolve(cachedSongPath)
     }
 
+    const rejectWithError = (msg: string) => reject(new FriendlyError(msg))
+
     const command = `yt-dlp -x -o "${outputPath}" ${url}`
     exec(command, ((error, stdout, stderr) => {
       if (error) {
         if (stderr.match(outputUnavailableRegex)) {
-          return reject('unavailable')
+          return rejectWithError('unavailable')
         }
 
         if (stderr.match(outputNotFoundRegex)) {
-          return reject('notFound')
+          return rejectWithError('notFound')
         }
       }
 
@@ -39,7 +41,7 @@ export const downloadSong = (url: string) => {
       }
 
       console.log(error)
-      return reject('unknown')
+      return rejectWithError('unknown')
     }))
   })
 }

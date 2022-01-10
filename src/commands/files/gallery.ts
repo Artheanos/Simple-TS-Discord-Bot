@@ -7,13 +7,13 @@ export default class implements MyCommand {
   async handleMessage({ message }: MyCommandProps) {
     let newMsg = await message.channel.send('Loading...');
 
-    let images = [
+    const images = [
       'https://discord.js.org/static/logo-square.png',
       'https://miro.medium.com/max/2448/1*FvnpdnrTSQZc_uAGP0GMWg.png',
       'https://w7.pngwing.com/pngs/4/186/png-transparent-javascript-node-js-logo-computer-programming-programmer-others-miscellaneous-angle-text.png'
     ];
 
-    let imagePointer = new Carousel(images);
+    const imagePointer = new Carousel(images);
 
     // let imagePointer = new function() {
     //     this.val = 0;
@@ -55,7 +55,7 @@ export default class implements MyCommand {
         }
       ).catch(
         () => {
-          setTimeout(newMsg.delete, 1000)
+          setTimeout(() => newMsg.delete(), 1000)
           alive = false;
         }
       );

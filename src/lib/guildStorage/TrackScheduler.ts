@@ -31,22 +31,10 @@ export class TrackScheduler {
     }
   }
 
-  skip() {
-    // const player = this.player
-    // if (player) {
-    //   if (this.songs.length) {
-    //     this.playNext()
-    //   } else {
-    //     player.stop()
-    //   }
-    // }
-  }
-
   onPlayerStateChange(newState: AudioPlayerState) {
     if (newState.status === AudioPlayerStatus.Idle) {
       this.playNext()
     }
-    console.log(newState.status)
   }
 
   private isPlaying() {

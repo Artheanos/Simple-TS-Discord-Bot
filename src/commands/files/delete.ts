@@ -22,6 +22,6 @@ export default class implements MyCommand {
       message.channel.send(`Out of range (0, 50)`)
     }
 
-    message.channel.bulkDelete(msg_count + 1).then(() => message.channel.send(`I deleted \`${msg_count}\` messages`).then(m => setTimeout(m.delete, 5000)));
+    message.channel.bulkDelete(msg_count + 1).then(() => message.channel.send(`I deleted \`${msg_count}\` messages`).then(m => setTimeout(() => m.delete(), 5000)));
   }
 }

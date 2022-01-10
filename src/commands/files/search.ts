@@ -3,49 +3,40 @@ import { Message, TextChannel } from "discord.js";
 import { joinAndPlay } from "../../services/playService";
 import { VideoResult, youtubeSearch } from "../../lib/youtubeSearch";
 import { enumerateArray } from "../../utils";
-
-const cancelSearchMessage = 'q'
-
-const getResponse = async (authorId: string, channel: TextChannel) => {
-  const awaitedMessage = await channel.awaitMessages({
-    filter: (msg) => {
-      return msg.author.id === authorId
-    },
-    max: 1,
-    time: 30_000,
-    errors: ['time']
-  })
-
-  return awaitedMessage.first()
-}
+import { waitForNumberReaction } from "../../services/waitForNumberReaction";
 
 export default class implements MyCommand {
-  about = 'Search for youtube videos and play one of them'
-  alias = ['s']
+  about = 'Search for youtube videos and choose one of them'
 
-  async handleMessage({ message, args }: MyCommandProps) {
+  async handleMessage(props: MyCommandProps) {
+    const { message } = props
+    const video = await this.askUserForVideo(props)
+    if (video) {
+      await joinAndPlay(message, video.url)
+    }
+  }
+
+  private async askUserForVideo({ message, args }: MyCommandProps) {
     if (!this.validate(message, args)) {
       return
     }
     const channel = message.channel as TextChannel
 
-    const videos = await youtubeSearch(args[0])
-    await channel.send(this.formatVideoResults(videos))
-    const userResponse = await getResponse(message.author.id, channel)
-    if (!userResponse?.content) {
-      return
-    }
-    if (userResponse.content === cancelSearchMessage) {
-      userResponse.react('👍')
-      return
-    }
-    const videoIndex = Number(userResponse.content) - 1
+    const videos = await youtubeSearch(args.join(' '))
+    const videoListMessage = await channel.send(this.formatVideoResults(videos))
+    const userResponse = await waitForNumberReaction(videoListMessage, message.author.id)
+    const videoIndex = Number(userResponse) - 1
 
-    if (!isNaN(videoIndex) && videoIndex in videos) {
-      await joinAndPlay(message, videos[videoIndex].url)
-    } else {
-      await channel.send(`Invalid choice ${userResponse}`)
+    if (isNaN(videoIndex)) {
+      return
     }
+
+    if (!(videoIndex in videos)) {
+      await channel.send(`Invalid choice ${userResponse}`)
+      return
+    }
+
+    return videos[videoIndex]
   }
 
   private validate(message: Message, args: string[]): boolean {
@@ -64,12 +55,7 @@ export default class implements MyCommand {
   private formatVideoResults = (videos: VideoResult[]) => {
     return `
 \`\`\`${enumerateArray(videos.map(i => i.title))}
-
-${cancelSearchMessage} - Cancel search\`\`\`
+\`\`\`
     `
-  }
-
-  private validateNumberResponse = () => {
-
   }
 }

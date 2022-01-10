@@ -1,6 +1,6 @@
 import { GuildStorage } from "../lib/guildStorage";
 import { Message } from "discord.js";
-import { isValidURL } from "../utils";
+import { isValidURL, tmpSend } from "../utils";
 import { youtubeSearch } from "../lib/youtubeSearch";
 import { joinService } from "./joinService";
 
@@ -10,8 +10,10 @@ export const playService = async (message: Message, track: string) => {
     track = videos[0].url
   }
   try {
+    const downloadingMessage = await message.channel.send('Downloading')
     await GuildStorage.getItem(message.guildId!).scheduler.enqueue(track)
-    message.channel.send('Enqueued')
+    await downloadingMessage.edit('Downloaded 👌')
+    setTimeout(() => downloadingMessage.delete(), 1000)
   } catch (e: any) {
     message.channel.send(e.toString())
   }
