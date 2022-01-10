@@ -5,13 +5,20 @@ import {
   VoiceConnectionStatus
 } from '@discordjs/voice';
 import { Message } from 'discord.js';
+import { FriendlyError } from "../FriendlyError";
 
-export const joinVoice = (message: Message) => {
+const joinVoice = (message: Message) => {
+
   return new Promise((resolve: (connection: VoiceConnection) => void, reject) => {
     const { guild } = message
+    const voiceChannelId = message.member?.voice.channelId
+
+    if (!voiceChannelId) {
+      return reject(new FriendlyError('User not in a voice channel'))
+    }
 
     const connection = joinVoiceChannel({
-      channelId: message.member?.voice.channelId!,
+      channelId: voiceChannelId,
       guildId: guild!.id,
       adapterCreator: guild!.voiceAdapterCreator as DiscordGatewayAdapterCreator,
     })
@@ -24,6 +31,10 @@ export const joinVoice = (message: Message) => {
       resolve(connection)
     })
 
-    setTimeout(() => reject('Joining timeout'), 10_000)
+    setTimeout(() => reject(new FriendlyError('Joining timeout')), 10_000)
   })
+}
+
+export const joinService = async (message: Message) => {
+  await joinVoice(message)
 }

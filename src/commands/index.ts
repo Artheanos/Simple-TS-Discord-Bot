@@ -5,6 +5,7 @@ import { join } from 'path';
 import config from "config";
 import { tmpSend } from '../utils';
 import { MyCommand, MyCommandProps } from 'interfaces/MyCommand';
+import { FriendlyError } from "../FriendlyError";
 
 const COMMAND_FILES_PATH = join(__dirname, 'files');
 
@@ -73,11 +74,13 @@ export default function (inp: Client | Message): void {
     }
 
     if (commandList.hasOwnProperty(command)) {
-      commandList[command].handleMessage({ message, args, client });
+      commandList[command].handleMessage({ message, args, client })?.catch(e => {
+        if (e instanceof FriendlyError && e.message) {
+          message.channel.send(e.message)
+        }
+      })
     } else if (config.unknownCommandMessage) {
       unknownCommandMessage(message.channel, command);
     }
   }
 }
-
-// TODO change this file's name

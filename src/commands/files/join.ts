@@ -1,13 +1,13 @@
 import { MyCommand, MyCommandProps } from "interfaces/MyCommand";
-import { joinVoice } from "../../services/joinVoice";
+import { joinService } from "../../services/joinService";
 
 
 export default class implements MyCommand {
   about = "Joins voice channel you are currently in";
 
-  handleMessage({ message }: MyCommandProps) {
+  async handleMessage({ message }: MyCommandProps) {
     if (message.member?.voice) {
-      joinVoice(message)
+      await joinService(message)
     } else {
       message.channel.send('You are not in a voice channel')
     }

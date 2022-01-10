@@ -12,5 +12,5 @@ export interface MyCommand {
   about: string,
   alias?: string[],
 
-  handleMessage(props: MyCommandProps): void;
+  handleMessage(props: MyCommandProps): void | Promise<any>;
 }
