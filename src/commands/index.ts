@@ -1,4 +1,4 @@
-import { Client, Message, TextBasedChannel } from 'discord.js'
+import { Client, Message, TextBasedChannel, TextChannel } from 'discord.js'
 import { readdirSync } from 'fs';
 import { join } from 'path';
 
@@ -74,7 +74,7 @@ export default function (inp: Client | Message): void {
     }
 
     if (commandList.hasOwnProperty(command)) {
-      commandList[command].handleMessage({ message, args, client })?.catch(e => {
+      commandList[command].handleMessage({ message: message as any, args, client })?.catch(e => {
         if (e instanceof FriendlyError && e.message) {
           message.channel.send(e.message)
         }

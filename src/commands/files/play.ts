@@ -1,19 +1,17 @@
 import { MyCommand, MyCommandProps } from "interfaces/MyCommand";
-import { joinService } from "../../services/joinService";
-import { isValidURL } from "../../utils";
 import { Message } from "discord.js";
-import { playService } from "../../services/playService";
+import { joinAndPlay } from "../../services/playService";
 
 export default class implements MyCommand {
-  about = "Plays youtube link";
+  about = 'Plays the first youtube search result or a youtube video if given an url'
+  alias = ['p']
 
   async handleMessage({ message, args }: MyCommandProps) {
     if (!this.validate(message, args)) {
       return
     }
 
-    await joinService(message)
-    await playService(message, args[0])
+    await joinAndPlay(message, args.join(' '))
   }
 
   private validate(message: Message, args: string[]): boolean {
@@ -25,11 +23,6 @@ export default class implements MyCommand {
       message.channel.send('Wrong number of args')
       return false
     }
-
-    if (!isValidURL(args[0])) {
-      message.channel.send('Not a valid URL')
-      return false
-    }// TODO else get URL from search
 
     return true
   }

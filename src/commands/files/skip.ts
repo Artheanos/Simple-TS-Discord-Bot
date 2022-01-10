@@ -2,7 +2,8 @@ import { MyCommand, MyCommandProps } from "interfaces/MyCommand";
 import { GuildStorage } from "../../lib/guildStorage";
 
 export default class implements MyCommand {
-  about = "Skip current track";
+  about = 'Skip current track'
+  alias = ['next']
 
   handleMessage({ message }: MyCommandProps) {
     if (!message.guildId) {

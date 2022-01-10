@@ -37,5 +37,9 @@ function isValidURL(url: string) {
   }
 }
 
+function enumerateArray(arr: string[]) {
+  return arr.map((v, i) => `${i + 1}. ${v}`).join('\n')
+}
 
-export { MyRandom, Utils, tmpSend, isValidURL };
+
+export { MyRandom, Utils, tmpSend, isValidURL, enumerateArray };

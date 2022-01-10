@@ -2,8 +2,9 @@ import * as configJson from './config.json'
 import { PresenceData } from 'discord.js'
 
 type ConfigJson = (typeof configJson) & {
-  token: string
   ownerId: string
+  token: string
+  youtubeApiKey?: string
   defaultPresence: PresenceData
   censorList: {
     [key: string]: {

@@ -1,8 +1,8 @@
-import { Client, Message } from "discord.js";
+import { Client, Message, TextChannel } from "discord.js";
 
 
 export type MyCommandProps = {
-  message: Message,
+  message: Message & { channel: TextChannel },
   args: string[],
   client: Client
 }

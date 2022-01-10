@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Artheanos/Simple-JS-Discord-Bot#readme",
   "dependencies": {
     "@discordjs/voice": "^0.7.5",
+    "axios": "^0.24.0",
     "bent": "^7.3.12",
     "discord.js": "^13.5.1",
     "libsodium-wrappers": "^0.7.9",
