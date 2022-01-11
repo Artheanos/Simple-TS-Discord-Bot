@@ -2,28 +2,28 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { join } from "path";
 
-const fileVideoIdRegex = /^(.+)_/
+
 const urlVideoIdRegex = /watch\?v=(.{11})/
+const ytVideoUrl = `https://www.youtube.com/watch?v=`
+
+export const videoUrlToId = (videoUrl: string) => videoUrl.match(urlVideoIdRegex)?.[1]
+export const videoIdToUrl = (videoId: string) => `${ytVideoUrl}${videoId}`
+
+const fileRegex = /^(.{11})_(.+)\.(.+)$/
 
 const cachePath = path.join(__dirname, 'cache')
 
-const getCachePathByUrl = (url: string) => {
-  const videoId = url.match(urlVideoIdRegex)?.[1]
-  const cachedFileName = videoId && findCache(videoId)
-  if (cachedFileName) {
-    return join(cachePath, cachedFileName)
-  }
-}
-
-const findCache = (videoId: string): string | undefined => {
+export const findCache = (videoId: string, extension: string) => {
   const cacheFiles = fs.readdirSync(cachePath)
 
   for (let fileName of cacheFiles) {
-    const videoIdMatcher = fileName.match(fileVideoIdRegex)
-    if (videoIdMatcher?.[1] === videoId) {
-      return fileName
+    const matcher = fileName.match(fileRegex)
+    if (!matcher) {
+      return
+    }
+    const [, fileVideoId, , fileExtension] = matcher
+    if (fileVideoId === videoId && fileExtension === extension) {
+      return join(cachePath, fileName)
     }
   }
 }
-
-export { getCachePathByUrl }

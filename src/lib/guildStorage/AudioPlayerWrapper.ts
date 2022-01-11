@@ -19,11 +19,9 @@ export class AudioPlayerWrapper {
   }
 
   getPlayer(): AudioPlayer | undefined {
-    if (this.player) {
-      return this.player
+    if (!this.player) {
+      this.createSubscribedPlayer()
     }
-
-    this.createSubscribedPlayer()
 
     return this.player
   }
@@ -32,12 +30,8 @@ export class AudioPlayerWrapper {
     this.listener = listener
   }
 
-  private getConnection() {
-    return getVoiceConnection(this.guildId)
-  }
-
   private createSubscribedPlayer() {
-    const connection = this.getConnection()
+    const connection = getVoiceConnection(this.guildId)
 
     if (!connection) {
       throw `Client is not in any voice channel belonging to the guild#${this.guildId}`

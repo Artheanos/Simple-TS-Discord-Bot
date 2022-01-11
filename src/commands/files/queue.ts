@@ -7,7 +7,7 @@ export default class implements MyCommand {
   about = 'Shows the currently queued songs'
 
   handleMessage({ message }: MyCommandProps) {
-    const songs = GuildStorage.getItem(message.guildId!).scheduler.songs
+    const songs = GuildStorage.getItem(message.guildId!).scheduler.tracks
     if (songs.length) {
       message.channel.send(enumerateArray(songs.map(this.filePathToTitle)))
     } else {

@@ -5,3 +5,6 @@ dist/
 node_modules/
 .idea/
 config/config.json
+
+src/lib/youtubeDownloader/cache/*
+!src/lib/youtubeDownloader/cache/.keep

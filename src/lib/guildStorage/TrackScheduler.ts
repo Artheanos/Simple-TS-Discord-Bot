@@ -1,10 +1,10 @@
-import { downloadSong } from "../youtubeDownloader";
+import { downloadTrack } from "../youtubeDownloader";
 import { AudioPlayerState, AudioPlayerStatus, createAudioResource } from "@discordjs/voice";
 import { AudioPlayerWrapper } from "./AudioPlayerWrapper";
 
 
 export class TrackScheduler {
-  songs: string[] = []
+  tracks: string[] = []
 
   constructor(private readonly playerWrapper: AudioPlayerWrapper) {
   }
@@ -13,9 +13,8 @@ export class TrackScheduler {
     return this.playerWrapper.getPlayer()
   }
 
-  async enqueue(url: string) {
-    const outputPath = await downloadSong(url)
-    this.songs.push(outputPath)
+  async enqueue(filePath: string) {
+    this.tracks.push(filePath)
     if (!this.isPlaying()) {
       this.playNext()
     }
@@ -24,7 +23,7 @@ export class TrackScheduler {
   playNext() {
     const player = this.player
     if (player) {
-      const nextSong = this.songs.shift()
+      const nextSong = this.tracks.shift()
       if (nextSong) {
         player.play(createAudioResource(nextSong))
       }

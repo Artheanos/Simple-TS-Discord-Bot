@@ -3,6 +3,7 @@ import { Message } from "discord.js";
 import { isValidURL, tmpSend } from "../utils";
 import { youtubeSearch } from "../lib/youtubeSearch";
 import { joinService } from "./joinService";
+import { downloadTrack } from "../lib/youtubeDownloader";
 
 export const playService = async (message: Message, track: string) => {
   if (!isValidURL(track)) {
@@ -11,9 +12,12 @@ export const playService = async (message: Message, track: string) => {
   }
   try {
     const downloadingMessage = await message.channel.send('Downloading')
-    await GuildStorage.getItem(message.guildId!).scheduler.enqueue(track)
+
+    const filePath = await downloadTrack(track)
+    await GuildStorage.getItem(message.guildId!).scheduler.enqueue(filePath)
+
     await downloadingMessage.edit('Downloaded 👌')
-    setTimeout(() => downloadingMessage.delete(), 1000)
+    setTimeout(() => downloadingMessage.delete(), 1400)
   } catch (e: any) {
     message.channel.send(e.toString())
   }
@@ -22,4 +26,9 @@ export const playService = async (message: Message, track: string) => {
 export const joinAndPlay = async (message: Message, track: string) => {
   await joinService(message)
   await playService(message, track)
+}
+
+export const joinAndPlayFile = async (message: Message, filePath: string) => {
+  await joinService(message)
+  await GuildStorage.getItem(message.guildId!).scheduler.enqueue(filePath)
 }

@@ -1,9 +1,9 @@
 import { exec } from 'child_process'
 import { join } from 'path'
-import { getCachePathByUrl } from "./findCache";
+import { findCache, videoUrlToId } from "./findCache";
 import { FriendlyError } from "../../FriendlyError";
 
-const cachePath = join(__dirname, 'cache')
+export const cachePath = join(__dirname, 'cache')
 const fileNameTemplate = '%(id)s_%(title)s.%(ext)s'
 const outputPath = join(cachePath, fileNameTemplate)
 
@@ -11,19 +11,17 @@ const outputDestinationRegex = /\[ExtractAudio\] Destination: (.+)\n/
 const outputNotFoundRegex = /HTTP Error 404/
 const outputUnavailableRegex = /Video unavailable/
 
-type DownloadError = 'unavailable' | 'notFound' | 'unknown'
-
-
-export const downloadSong = (url: string) => {
+export const downloadTrack = (url: string, audioFormat: string = 'opus') => {
   return new Promise((resolve: (outputPath: string) => void, reject: (value: FriendlyError) => void) => {
-    const cachedSongPath = getCachePathByUrl(url)
+    const videoId = videoUrlToId(url)
+    const cachedSongPath = videoId && findCache(videoId, audioFormat)
     if (cachedSongPath) {
       return resolve(cachedSongPath)
     }
 
     const rejectWithError = (msg: string) => reject(new FriendlyError(msg))
 
-    const command = `yt-dlp -x -o "${outputPath}" ${url}`
+    const command = `yt-dlp -x --audio-format=${audioFormat} -o "${outputPath}" ${url}`
     exec(command, ((error, stdout, stderr) => {
       if (error) {
         if (stderr.match(outputUnavailableRegex)) {
