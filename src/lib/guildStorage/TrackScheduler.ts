@@ -1,7 +1,5 @@
-import { downloadTrack } from "../youtubeDownloader";
-import { AudioPlayerState, AudioPlayerStatus, createAudioResource } from "@discordjs/voice";
+import { AudioPlayerState, AudioPlayerStatus, createAudioResource, StreamType } from "@discordjs/voice";
 import { AudioPlayerWrapper } from "./AudioPlayerWrapper";
-
 
 export class TrackScheduler {
   tracks: string[] = []
@@ -25,7 +23,7 @@ export class TrackScheduler {
     if (player) {
       const nextSong = this.tracks.shift()
       if (nextSong) {
-        player.play(createAudioResource(nextSong))
+        player.play(TrackScheduler.createAudioResource(nextSong))
       }
     }
   }
@@ -38,5 +36,11 @@ export class TrackScheduler {
 
   private isPlaying() {
     return this.player?.state.status === AudioPlayerStatus.Playing;
+  }
+
+  private static createAudioResource(filePath: string) {
+    const options = filePath.endsWith('.opus') ? { inputType: StreamType.Opus } : {}
+
+    return createAudioResource(filePath, options)
   }
 }

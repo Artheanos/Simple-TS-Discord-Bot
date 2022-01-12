@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Artheanos/Simple-JS-Discord-Bot#readme",
   "dependencies": {
+    "@discordjs/opus": "^0.7.0",
     "@discordjs/voice": "^0.7.5",
     "axios": "^0.24.0",
     "bent": "^7.3.12",
