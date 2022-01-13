@@ -1,6 +1,7 @@
 import { downloadTrack } from "../../../src/lib/youtubeDownloader";
 import { resolve, join } from 'path'
 import * as fs from "fs";
+import { FriendlyError } from "../../../src/FriendlyError";
 
 jest.setTimeout(10_000)
 
@@ -9,13 +10,13 @@ describe('Downloading song', () => {
   describe('when url is invalid', () => {
     describe('invalid url', () => {
       it('returns 404', async () => {
-        await expect(downloadTrack('https://youtube.com/dusko')).rejects.toEqual('notFound')
+        await expect(downloadTrack('https://youtube.com/dusko')).rejects.toEqual(new FriendlyError('notFound'))
       })
     })
 
     describe('invalid videoId', () => {
       it('returns Video unavailable', async () => {
-        await expect(downloadTrack('https://www.youtube.com/watch?v=ZZ3bYfUEWixI')).rejects.toEqual('unavailable')
+        await expect(downloadTrack('https://www.youtube.com/watch?v=ZZ3bYfUEWixI')).rejects.toEqual(new FriendlyError('unavailable'))
       })
     })
   })

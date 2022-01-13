@@ -45,5 +45,15 @@ function initArray<T>(length: number, map: (i: number) => T) {
   return new Array(length).fill(undefined).map(map)
 }
 
+async function awaitIfPromise<T>(value: T | Promise<T>): Promise<T> {
+  if (value instanceof Promise) {
+    return await value
+  }
+  return value
+}
 
-export { MyRandom, Utils, tmpSend, isValidURL, enumerateArray, initArray };
+function capitalize(str: string) {
+  return str[0].toUpperCase() + str.substring(1)
+}
+
+export { MyRandom, Utils, tmpSend, isValidURL, enumerateArray, initArray, awaitIfPromise, capitalize };

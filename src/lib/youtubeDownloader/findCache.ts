@@ -19,7 +19,7 @@ export const findCache = (videoId: string, extension: string) => {
   for (let fileName of cacheFiles) {
     const matcher = fileName.match(fileRegex)
     if (!matcher) {
-      return
+      continue
     }
     const [, fileVideoId, , fileExtension] = matcher
     if (fileVideoId === videoId && fileExtension === extension) {

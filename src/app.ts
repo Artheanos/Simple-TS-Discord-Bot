@@ -1,38 +1,40 @@
 import 'module-alias/register'
-import * as Discord from 'discord.js';
-import config from "config";
-import commands from './commands';
-import censor from './censor';
+import { Intents, PresenceData, Client } from 'discord.js'
+import config from "config"
+import { CommandManager } from './CommandManager'
+import censor from './censor'
 
 
-const client = new Discord.Client({
+const client = new Client({
   intents: [
-    Discord.Intents.FLAGS.GUILDS,
-    Discord.Intents.FLAGS.GUILD_MESSAGES,
-    Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-    Discord.Intents.FLAGS.DIRECT_MESSAGES,
-    Discord.Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-    Discord.Intents.FLAGS.GUILD_VOICE_STATES,
-    Discord.Intents.FLAGS.GUILD_WEBHOOKS,
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+    Intents.FLAGS.DIRECT_MESSAGES,
+    Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+    Intents.FLAGS.GUILD_VOICE_STATES,
+    Intents.FLAGS.GUILD_WEBHOOKS,
   ]
 })
-commands(client);
-
+const commandManager = new CommandManager(client)
 
 client.on('ready', () => {
-  client.user!.setPresence(config.defaultPresence as Discord.PresenceData)
-  console.log('Ready');
-});
+  client.user!.setPresence(config.defaultPresence as PresenceData)
+  console.log('Ready')
+})
 
 client.on('messageCreate', msg => {
-
   if (msg.author.id === client.user!.id)
-    return;
+    return
 
   if (censor(msg))
-    return;
+    return
 
-  commands(msg);
-});
+  commandManager.onCreateMessage(msg)
+})
 
-client.login(config.token);
+client.on('voiceStateUpdate', (oldState, newState) => {
+
+})
+
+client.login(config.token)
