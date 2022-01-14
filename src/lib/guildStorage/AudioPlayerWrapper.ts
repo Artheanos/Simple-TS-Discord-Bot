@@ -5,7 +5,6 @@ import {
   getVoiceConnection,
   NoSubscriberBehavior
 } from "@discordjs/voice";
-import { TrackScheduler } from "./TrackScheduler";
 
 type PlayerListener = (state: AudioPlayerState) => void
 

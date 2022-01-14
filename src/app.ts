@@ -1,8 +1,10 @@
 import 'module-alias/register'
 import { Intents, PresenceData, Client } from 'discord.js'
-import config from "config"
-import { CommandManager } from './CommandManager'
+
 import censor from './censor'
+import config from "config"
+console.log(config)
+import { CommandManager } from './CommandManager'
 
 
 const client = new Client({

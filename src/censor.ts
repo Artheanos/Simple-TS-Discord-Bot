@@ -1,5 +1,5 @@
-import { Message } from 'discord.js';
 import configFile from "config";
+import { Message } from 'discord.js';
 
 const { censorList } = configFile
 

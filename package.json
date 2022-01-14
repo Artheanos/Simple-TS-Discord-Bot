@@ -37,9 +37,9 @@
     "yarn-upgrade-all": "^0.6.1"
   },
   "_moduleAliases": {
-    "config": "dist/config",
-    "interfaces": "dist/src/interfaces"
+    "config": "dist/config"
   },
+  "_moduleDirectories": ["dist/src"],
   "jest": {
     "testEnvironment": "node",
     "transform": {
@@ -50,10 +50,6 @@
       "ts",
       "tsx",
       "js"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "./"
     ]
   }
 }

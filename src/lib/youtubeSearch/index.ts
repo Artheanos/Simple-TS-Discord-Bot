@@ -1,6 +1,7 @@
 import axios from "axios";
 import config from "config";
-import { videoIdToUrl } from "../youtubeDownloader/findCache";
+
+import { videoIdToUrl } from 'lib/youtubeDownloader/findCache'
 
 const ytSearchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${config.youtubeApiToken}`
 const ytSearchUrlWithQuery = (q: string) => `${ytSearchUrl}&q=${q}`

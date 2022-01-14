@@ -1,5 +1,5 @@
 import { BaseCommand } from "./BaseCommand"
-import { joinAndPlay } from "../services/playService"
+import { joinAndPlay } from "services/playService"
 
 export class PlayCommand extends BaseCommand {
   static minArgsLength = 1

@@ -1,8 +1,8 @@
 import path = require("path")
 
-import { enumerateArray } from "../utils"
+import { enumerateArray } from "utils"
 import { BaseCommand } from "./BaseCommand"
-import { UserScope } from "../UserScope";
+import { UserScope } from "UserScope";
 
 export class QueueCommand extends BaseCommand {
   static blacklist = new UserScope({ userIds: ['262610764597166081'] })

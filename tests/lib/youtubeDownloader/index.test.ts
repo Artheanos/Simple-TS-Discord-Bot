@@ -1,7 +1,8 @@
+import * as fs from "fs";
+
+import { FriendlyError } from "../../../src/FriendlyError";
 import { downloadTrack } from "../../../src/lib/youtubeDownloader";
 import { resolve, join } from 'path'
-import * as fs from "fs";
-import { FriendlyError } from "../../../src/FriendlyError";
 
 jest.setTimeout(10_000)
 
