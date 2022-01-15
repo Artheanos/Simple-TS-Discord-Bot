@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message } from "discord.js"
 
 const emojiToNumber = (emoji: string) => {
   return new TextEncoder().encode(emoji)[0] - 48

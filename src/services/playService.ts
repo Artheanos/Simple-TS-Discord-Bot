@@ -1,10 +1,10 @@
-import { Message } from "discord.js";
+import { Message } from "discord.js"
 
-import { GuildStorage } from "lib/guildStorage";
-import { downloadTrack } from "lib/youtubeDownloader";
-import { isValidURL } from "utils";
-import { joinService } from "./joinService";
-import { youtubeSearch } from "lib/youtubeSearch";
+import { GuildStorage } from "lib/guildStorage"
+import { downloadTrack } from "lib/youtubeDownloader"
+import { isValidURL } from "utils"
+import { joinService } from "./joinService"
+import { youtubeSearch } from "lib/youtubeSearch"
 
 export const playService = async (message: Message, track: string) => {
   if (!isValidURL(track)) {

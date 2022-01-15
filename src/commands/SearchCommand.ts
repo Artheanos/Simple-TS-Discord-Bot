@@ -1,9 +1,9 @@
 import { BaseCommand } from "./BaseCommand"
-import { joinAndPlay } from "services/playService";
-import { youtubeSearch } from "lib/youtubeSearch";
-import { waitForNumberReaction } from "services/waitForNumberReaction";
-import { enumerateArray } from "utils";
-import { Formatters } from "discord.js";
+import { joinAndPlay } from "services/playService"
+import { youtubeSearch } from "lib/youtubeSearch"
+import { waitForNumberReaction } from "services/waitForNumberReaction"
+import { enumerateArray } from "utils"
+import { Formatters } from "discord.js"
 
 export class SearchCommand extends BaseCommand {
   static description = 'Search for youtube videos and choose one of them'

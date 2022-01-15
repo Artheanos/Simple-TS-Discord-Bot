@@ -7,7 +7,7 @@ export class DeleteCommand extends BaseCommand {
   static MAX_MESSAGE_COUNT = 50
 
   async action() {
-    const messageCount = Number(this.args[0]);
+    const messageCount = Number(this.args[0])
 
     if (isNaN(messageCount)) {
       return `${this.args[0]} is not a number`

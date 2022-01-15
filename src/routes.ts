@@ -7,7 +7,7 @@ import { LolCommand } from "commands/LolCommand"
 import { PauseCommand } from "commands/PauseCommand"
 import { PlayCommand } from "commands/PlayCommand"
 import { QueueCommand } from "commands/QueueCommand"
-import { SearchCommand } from "commands/SearchCommand";
+import { SearchCommand } from "commands/SearchCommand"
 import { ShutdownCommand } from "commands/ShutdownCommand"
 import { SkipCommand } from "commands/SkipCommand"
 import { UnpauseCommand } from "commands/UnpauseCommand"

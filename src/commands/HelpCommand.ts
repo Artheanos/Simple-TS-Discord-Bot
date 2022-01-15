@@ -1,5 +1,5 @@
 import { BaseCommand } from "./BaseCommand"
-import { routes } from "../routes";
+import { routes } from "routes"
 
 
 export class HelpCommand extends BaseCommand {

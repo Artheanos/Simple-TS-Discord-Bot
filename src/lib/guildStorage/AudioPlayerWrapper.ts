@@ -4,7 +4,7 @@ import {
   createAudioPlayer,
   getVoiceConnection,
   NoSubscriberBehavior
-} from "@discordjs/voice";
+} from "@discordjs/voice"
 
 type PlayerListener = (state: AudioPlayerState) => void
 
@@ -42,7 +42,7 @@ export class AudioPlayerWrapper {
       }
     })
 
-    const player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Pause, }, });
+    const player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Pause, }, })
     connection?.subscribe(player)
     player.on('stateChange', (_, newState) => this.listener?.(newState))
     this.player = player

@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import { join } from "path";
+import { join } from "path"
 
 
 const urlVideoIdRegex = /watch\?v=(.{11})/

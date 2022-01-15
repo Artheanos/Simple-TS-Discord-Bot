@@ -1,10 +1,10 @@
-import { Client, Guild, Message, TextChannel, } from "discord.js";
+import { Client, Guild, Message, TextChannel, } from "discord.js"
 
-import config from "config";
-import { GuildStorage } from "lib/guildStorage";
-import { TextChannelMessage } from "interfaces/TextChannelMessage";
-import { UserScope } from "UserScope";
-import { awaitIfPromise } from "utils";
+import config from "config"
+import { GuildStorage } from "lib/guildStorage"
+import { TextChannelMessage } from "interfaces/TextChannelMessage"
+import { UserScope } from "UserScope"
+import { awaitIfPromise } from "utils"
 
 export abstract class BaseCommand {
   async perform() {

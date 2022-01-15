@@ -3,8 +3,7 @@ import { Intents, PresenceData, Client } from 'discord.js'
 
 import censor from './censor'
 import config from "config"
-console.log(config)
-import { CommandManager } from './CommandManager'
+import { CommandManager } from 'CommandManager'
 
 
 const client = new Client({

@@ -1,8 +1,8 @@
 import { exec } from 'child_process'
 import { join } from 'path'
 
-import { FriendlyError } from "../../FriendlyError";
-import { findCache, videoUrlToId } from "./findCache";
+import { FriendlyError } from "FriendlyError"
+import { findCache, videoUrlToId } from "./findCache"
 
 export const cachePath = join(__dirname, 'cache')
 const fileNameTemplate = '%(id)s_%(title)s.%(ext)s'

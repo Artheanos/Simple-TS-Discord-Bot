@@ -1,5 +1,5 @@
-import { AudioPlayerState, AudioPlayerStatus, createAudioResource, StreamType } from "@discordjs/voice";
-import { AudioPlayerWrapper } from "./AudioPlayerWrapper";
+import { AudioPlayerState, AudioPlayerStatus, createAudioResource, StreamType } from "@discordjs/voice"
+import { AudioPlayerWrapper } from "./AudioPlayerWrapper"
 
 export class TrackScheduler {
   tracks: string[] = []
@@ -35,7 +35,7 @@ export class TrackScheduler {
   }
 
   private isPlaying() {
-    return this.player?.state.status === AudioPlayerStatus.Playing;
+    return this.player?.state.status === AudioPlayerStatus.Playing
   }
 
   private static createAudioResource(filePath: string) {

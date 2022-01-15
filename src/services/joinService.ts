@@ -3,9 +3,9 @@ import {
   joinVoiceChannel,
   VoiceConnection,
   VoiceConnectionStatus
-} from '@discordjs/voice';
-import { Message } from 'discord.js';
-import { FriendlyError } from "../FriendlyError";
+} from '@discordjs/voice'
+import { Message } from 'discord.js'
+import { FriendlyError } from "FriendlyError"
 
 const joinVoice = (message: Message) => {
 

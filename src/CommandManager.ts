@@ -1,12 +1,12 @@
 import { Client, Message, TextBasedChannel, TextChannel } from 'discord.js'
 
 import config from "config"
-import { FriendlyError } from "./FriendlyError"
-import { TextChannelMessage } from "interfaces/TextChannelMessage";
-import { routes } from "./routes";
+import { FriendlyError } from "FriendlyError"
+import { TextChannelMessage } from "interfaces/TextChannelMessage"
+import { routes } from "routes"
 import { tmpSend } from 'utils'
 
-import { HelpCommand } from "commands/HelpCommand";
+import { HelpCommand } from "commands/HelpCommand"
 routes['help'] = HelpCommand
 
 const unknownCommandMessage = (channel: TextBasedChannel, commandName: string): void => {
