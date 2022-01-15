@@ -6,11 +6,6 @@ import { videoIdToUrl } from 'lib/youtubeDownloader/findCache'
 const ytSearchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${config.youtubeApiToken}`
 const ytSearchUrlWithQuery = (q: string) => `${ytSearchUrl}&q=${q}`
 
-export type VideoResult = {
-  url: string
-  title: string
-}
-
 const videoResultBuilder = (item: YT.Item): VideoResult => ({
   url: videoIdToUrl(item.id.videoId),
   title: item.snippet.title

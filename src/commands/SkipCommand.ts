@@ -4,6 +4,6 @@ export class SkipCommand extends BaseCommand {
   static description = 'Skips the current track'
 
   action() {
-    this.getGuildExtension().scheduler.playNext()
+    this.getGuildExtension().playerWrapper.getPlayer()?.stop()
   }
 }
