@@ -1,7 +1,7 @@
 import { Message } from "discord.js"
 
 import { GuildStorage } from "lib/guildStorage"
-import { downloadTrack } from "lib/youtubeDownloader"
+import { downloadTrack, filePathToTitle } from "lib/youtubeDownloader"
 import { isValidURL } from "utils"
 import { joinService } from "./joinService"
 import { youtubeSearch } from "lib/youtubeSearch"
@@ -12,13 +12,19 @@ export const playService = async (message: Message, track: string) => {
     track = videos[0].url
   }
   try {
-    const downloadingMessage = await message.channel.send('Downloading')
-
+    const responseMessage = await message.channel.send('Downloading')
     const filePath = await downloadTrack(track)
-    await GuildStorage.getItem(message.guildId!).scheduler.enqueue(filePath)
+    const trackTitle = filePathToTitle(filePath)
+    const scheduler = await GuildStorage.getItem(message.guildId!).scheduler
 
-    await downloadingMessage.edit('Downloaded 👌')
-    setTimeout(() => downloadingMessage.delete(), 1400)
+    await scheduler.enqueue(filePath)
+
+    if (scheduler.currentTrack) {
+      await responseMessage.edit(`Enqueued \`${trackTitle}\``)
+    } else {
+      await responseMessage.edit(`Now playing \`${trackTitle}\``)
+    }
+
   } catch (e: any) {
     message.channel.send(e.toString())
   }

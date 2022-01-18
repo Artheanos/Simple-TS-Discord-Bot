@@ -14,8 +14,8 @@ const client = new Client({
     Intents.FLAGS.DIRECT_MESSAGES,
     Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
     Intents.FLAGS.GUILD_VOICE_STATES,
-    Intents.FLAGS.GUILD_WEBHOOKS,
-  ]
+  ],
+  partials: ['CHANNEL']
 })
 const commandManager = new CommandManager(client)
 

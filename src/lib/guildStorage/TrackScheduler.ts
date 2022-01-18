@@ -2,7 +2,8 @@ import { AudioPlayerState, AudioPlayerStatus, createAudioResource, StreamType } 
 import { AudioPlayerWrapper } from "./AudioPlayerWrapper"
 
 export class TrackScheduler {
-  tracks: string[] = []
+  queue: string[] = []
+  currentTrack?: string
 
   constructor(private readonly playerWrapper: AudioPlayerWrapper) {
   }
@@ -12,18 +13,20 @@ export class TrackScheduler {
   }
 
   async enqueue(filePath: string) {
-    this.tracks.push(filePath)
+    this.queue.push(filePath)
     if (!this.isPlaying()) {
       this.playNext()
     }
   }
 
   playNext() {
+    delete this.currentTrack
     const player = this.player
     if (player) {
-      const nextSong = this.tracks.shift()
+      const nextSong = this.queue.shift()
       if (nextSong) {
         player.play(TrackScheduler.createAudioResource(nextSong))
+        this.currentTrack = nextSong
       }
     }
   }

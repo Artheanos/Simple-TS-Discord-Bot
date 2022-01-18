@@ -1,11 +1,20 @@
 import { TextBasedChannel } from "discord.js"
 
 const MyRandom = {
-  choice(array: any[]) {
+  choice<T>(array: T[]) {
     if (array.length)
       return array[this.int(array.length - 1)]
   },
-
+  sample<T>(array: T[], size: number): T[] {
+    const arrayCopy = [...array]
+    const result = []
+    while (arrayCopy.length && size--) {
+      const randomIndex = this.int(arrayCopy.length - 1)
+      result.push(arrayCopy[randomIndex])
+      arrayCopy.splice(randomIndex, 1)
+    }
+    return result
+  },
   int(min: number, max?: number) {
     if (max === undefined) {
       [min, max] = [0, min]
@@ -14,12 +23,10 @@ const MyRandom = {
   }
 }
 
-const Utils = {
-  removeFromArray<T>(arr: T[], needle: T) {
-    let index = arr.indexOf(needle)
-    if (index !== -1)
-      arr.splice(index, 1)
-  }
+function removeFromArray<T>(arr: T[], needle: T) {
+  let index = arr.indexOf(needle)
+  if (index !== -1)
+    arr.splice(index, 1)
 }
 
 async function tmpSend(channel: TextBasedChannel, messageContent: string, deleteAfter: number) {
@@ -56,4 +63,4 @@ function capitalize(str: string) {
   return str[0].toUpperCase() + str.substring(1)
 }
 
-export { MyRandom, Utils, tmpSend, isValidURL, enumerateArray, initArray, awaitIfPromise, capitalize }
+export { MyRandom, tmpSend, isValidURL, enumerateArray, initArray, awaitIfPromise, capitalize }

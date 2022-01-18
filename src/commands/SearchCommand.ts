@@ -18,7 +18,7 @@ export class SearchCommand extends BaseCommand {
 
   private async getVideoFromUser() {
     const videos = await youtubeSearch(this.args.join(' '))
-    const videoListMessage = await this.reply(Formatters.codeBlock(enumerateArray(videos.map(i => i.title))))
+    const videoListMessage = await this.reply(Formatters.codeBlock(enumerateArray(videos.map(v => v.title))))
     const userResponse = await waitForNumberReaction(videoListMessage, this.message.author.id)
     const videoIndex = Number(userResponse) - 1
 

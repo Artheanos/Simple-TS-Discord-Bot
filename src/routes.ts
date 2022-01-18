@@ -7,6 +7,7 @@ import { LolCommand } from "commands/LolCommand"
 import { PauseCommand } from "commands/PauseCommand"
 import { PlayCommand } from "commands/PlayCommand"
 import { QueueCommand } from "commands/QueueCommand"
+import { Rule34Command } from "commands/Rule34Command";
 import { SearchCommand } from "commands/SearchCommand"
 import { ShutdownCommand } from "commands/ShutdownCommand"
 import { SkipCommand } from "commands/SkipCommand"
@@ -22,6 +23,7 @@ export const routes: Record<string, Type<BaseCommand>> = {
   'pause':      PauseCommand,
   'play':       PlayCommand,
   'p':          PlayCommand,
+  'rule34':     Rule34Command,
   'queue':      QueueCommand,
   'shutdown':   ShutdownCommand,
   'search':     SearchCommand,
@@ -29,4 +31,5 @@ export const routes: Record<string, Type<BaseCommand>> = {
   'next':       SkipCommand,
   'unpause':    UnpauseCommand,
   'resume':     UnpauseCommand,
+  'routes':     Rule34Command,
 }
