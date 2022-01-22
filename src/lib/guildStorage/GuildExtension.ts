@@ -4,6 +4,7 @@ import { TrackScheduler } from "./TrackScheduler"
 export class GuildExtension {
   readonly playerWrapper: AudioPlayerWrapper
   readonly scheduler: TrackScheduler
+  aloneTimeout?: ReturnType<typeof setTimeout>
 
   constructor(guildId: string) {
     this.playerWrapper = new AudioPlayerWrapper(guildId)

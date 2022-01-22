@@ -4,7 +4,8 @@ import { Intents, PresenceData, Client } from 'discord.js'
 import censor from './censor'
 import config from "config"
 import { CommandManager } from 'CommandManager'
-
+import { getVoiceConnection } from '@discordjs/voice'
+import { GuildStorage } from "lib/guildStorage";
 
 const client = new Client({
   intents: [
@@ -35,7 +36,31 @@ client.on('messageCreate', msg => {
 })
 
 client.on('voiceStateUpdate', (oldState, newState) => {
+  if (oldState.member!.id === client.user!.id) return
+  if (!oldState.channel) return
 
+  const connection = getVoiceConnection(oldState.guild.id)
+  const botVoiceChannelId = connection?.joinConfig.channelId
+
+  const userLeft = oldState.channelId === botVoiceChannelId && newState.channelId !== botVoiceChannelId
+
+  if (userLeft) {
+    const botIsAlone = oldState.channel.members.size === 1
+    if (botIsAlone) {
+      const timeout = setTimeout(() => connection?.disconnect(), 30_000)
+      const guildExtension = GuildStorage.getItem(oldState.guild.id)
+      guildExtension.aloneTimeout = timeout
+    }
+  } else {
+    const userJoined = oldState.channelId !== botVoiceChannelId && newState.channelId === botVoiceChannelId
+    if (userJoined) {
+      const guildExtension = GuildStorage.getItem(oldState.guild.id)
+      if (guildExtension.aloneTimeout) {
+        clearTimeout(guildExtension.aloneTimeout)
+        delete guildExtension.aloneTimeout
+      }
+    }
+  }
 })
 
 client.login(config.token)
