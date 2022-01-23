@@ -6,6 +6,6 @@ export class PlayCommand extends BaseCommand {
   static description = 'Plays the first result form Youtube or a URL (if given a URL)'
 
   action() {
-    joinAndPlay(this.message, this.args[0])
+    joinAndPlay(this.message, this.args.join(' '))
   }
 }
