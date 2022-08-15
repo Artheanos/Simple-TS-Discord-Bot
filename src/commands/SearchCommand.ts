@@ -1,5 +1,5 @@
 import { BaseCommand } from "./BaseCommand"
-import { joinAndPlay } from "services/playService"
+import { PlayService } from "services/PlayService"
 import { youtubeSearch } from "lib/youtubeSearch"
 import { waitForNumberReaction } from "services/waitForNumberReaction"
 import { enumerateArray } from "utils"
@@ -12,7 +12,7 @@ export class SearchCommand extends BaseCommand {
   async action() {
     const video = await this.getVideoFromUser()
     if (video) {
-      await joinAndPlay(this.message, video.url)
+      await new PlayService(this.message, video.url).call()
     }
   }
 

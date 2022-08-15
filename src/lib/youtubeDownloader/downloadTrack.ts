@@ -8,7 +8,7 @@ export const cachePath = join(__dirname, 'cache')
 const fileNameTemplate = '%(id)s_%(title)s.%(ext)s'
 const outputPath = join(cachePath, fileNameTemplate)
 
-const outputDestinationRegex = /\[ExtractAudio\] Destination: (.+)\n/
+const outputDestinationRegex = /\[ExtractAudio] Destination: (.+)\n/
 const outputNotFoundRegex = /HTTP Error 404/
 const outputUnavailableRegex = /Video unavailable/
 

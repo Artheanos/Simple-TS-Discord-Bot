@@ -1,10 +1,10 @@
 import { BaseCommand } from "./BaseCommand"
-import { joinService } from "services/joinService"
+import { JoinService } from "services/JoinService"
 
 export class JoinCommand extends BaseCommand {
   static description = 'Join the voice channel you are currently in'
 
   action() {
-    joinService(this.message)
+    new JoinService(this.message).call()
   }
 }
