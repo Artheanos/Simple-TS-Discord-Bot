@@ -1,5 +1,5 @@
-const fs = require("fs")
-const path = require("path")
+const fs = require('fs')
+const path = require('path')
 
 function capitalize(str) {
     return str[0].toUpperCase() + str.substring(1)

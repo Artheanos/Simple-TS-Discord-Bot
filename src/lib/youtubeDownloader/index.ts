@@ -1,2 +1,1 @@
-export { downloadTrack } from './downloadTrack'
-export { filePathToTitle } from './filePathToTitle'
+export { getTitle } from './getTitle'

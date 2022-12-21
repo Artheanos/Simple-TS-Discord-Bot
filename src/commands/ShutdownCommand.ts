@@ -1,10 +1,10 @@
-import { BaseCommand } from "./BaseCommand"
+import { BaseCommand } from './BaseCommand'
 
 export class ShutdownCommand extends BaseCommand {
-  static description = 'Stops the bot'
-  static ownerOnly = true
+    static description = 'Stops the bot'
+    static ownerOnly = true
 
-  action() {
-    this.client.destroy()
-  }
+    action() {
+        this.client.destroy()
+    }
 }

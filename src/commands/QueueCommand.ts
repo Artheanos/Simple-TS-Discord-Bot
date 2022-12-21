@@ -1,12 +1,11 @@
-import { BaseCommand } from "./BaseCommand"
-import { enumerateArray } from "utils"
-import { filePathToTitle } from "lib/youtubeDownloader";
+import { BaseCommand } from './BaseCommand'
+import { enumerateArray } from 'utils'
 
 export class QueueCommand extends BaseCommand {
-  static description = 'Show currently queued tracks'
+    static description = 'Show currently queued tracks'
 
-  action() {
-    const tracks = this.getGuildExtension().scheduler.queue
-    return tracks.length ? enumerateArray(tracks.map(filePathToTitle)) : 'Empty queue'
-  }
+    action() {
+        const tracks = this.getGuildExtension().scheduler.queue
+        return tracks.length ? enumerateArray(tracks.map(i => i.title)) : 'Empty queue'
+    }
 }

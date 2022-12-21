@@ -1,9 +1,9 @@
-import { BaseCommand } from "./BaseCommand"
+import { BaseCommand } from './BaseCommand'
 
 export class LolCommand extends BaseCommand {
-  static description = 'Lolito'
+    static description = 'Lolito'
 
-  action() {
-    return 'Hello world'
-  }
+    action() {
+        return 'Hello world'
+    }
 }

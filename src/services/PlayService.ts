@@ -1,40 +1,50 @@
-import { Message } from "discord.js"
+import { Message } from 'discord.js'
 
-import { GuildStorage } from "lib/guildStorage"
-import { downloadTrack, filePathToTitle } from "lib/youtubeDownloader"
-import { isValidURL } from "utils"
-import { youtubeSearch } from "lib/youtubeSearch"
-import { JoinService } from "./JoinService"
+import { GuildStorage } from 'lib/guildStorage'
+import { JoinService } from './JoinService'
+import { getTitle } from 'lib/youtubeDownloader'
+import { isValidURL } from 'utils'
+import { streamTrack } from 'lib/youtubeDownloader/streamTrack'
+import { youtubeSearch } from 'lib/youtubeSearch'
+import { QueuedTrack } from "lib/guildStorage/types";
 
 export class PlayService {
-  constructor(private message: Message, private track: string) { }
-
-  async call() {
-    try {
-      await new JoinService(this.message).call()
-      const responseMessage = await this.message.channel.send('Downloading')
-      const filePath = await downloadTrack(await this.videoUrl())
-      const trackTitle = filePathToTitle(filePath)
-      const scheduler = GuildStorage.getItem(this.message.guildId!).scheduler
-
-      await scheduler.enqueue(filePath)
-
-      if (scheduler.currentTrack) {
-        await responseMessage.edit(`Enqueued \`${trackTitle}\``)
-      } else {
-        await responseMessage.edit(`Now playing \`${trackTitle}\``)
-      }
-
-    } catch (e: any) {
-      this.message.channel.send(e.toString())
+    constructor(private message: Message, private track: string) {
     }
-  }
 
-  private async videoUrl(): Promise<string> {
-    return isValidURL(this.track) ? this.track : this.getFirstResultFromYoutube()
-  }
+    async call() {
+        try {
+            await new JoinService(this.message).call()
+            this.enqueueTrack()
+        } catch (e: any) {
+            this.message.channel.send(e.toString())
+        }
+    }
 
-  private async getFirstResultFromYoutube() {
-    return (await youtubeSearch(this.track))[0].url
-  }
+    private async enqueueTrack() {
+        const responseMessage = await this.message.channel.send('Downloading')
+
+        const videoInfo = await this.getVideoInfo()
+        const scheduler = GuildStorage.getItem(this.message.guildId!).scheduler
+        await scheduler.enqueue(videoInfo)
+
+        if (scheduler.currentTrack) {
+            await responseMessage.edit(`Enqueued \`${videoInfo.title}\``)
+        } else {
+            await responseMessage.edit(`Now playing \`${videoInfo.title}\``)
+        }
+    }
+
+    private async getVideoInfo(): Promise<QueuedTrack> {
+        const video = isValidURL(this.track) ? {
+            url: this.track,
+            title: getTitle(this.track),
+        } : await this.getFirstResultFromYoutube()
+
+        return { ...video, stream: streamTrack(video.url) }
+    }
+
+    private async getFirstResultFromYoutube() {
+        return (await youtubeSearch(this.track))[0]
+    }
 }

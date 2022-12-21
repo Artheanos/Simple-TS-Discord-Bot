@@ -1,49 +1,44 @@
-import { AudioPlayerState, AudioPlayerStatus, createAudioResource, StreamType } from "@discordjs/voice"
-import { AudioPlayerWrapper } from "./AudioPlayerWrapper"
+import { AudioPlayerState, AudioPlayerStatus, createAudioResource } from '@discordjs/voice'
+import { AudioPlayerWrapper } from './AudioPlayerWrapper'
+import { QueuedTrack } from 'lib/guildStorage/types'
 
 export class TrackScheduler {
-  queue: string[] = []
-  currentTrack?: string
+    queue: QueuedTrack[] = []
+    currentTrack?: QueuedTrack
 
-  constructor(private readonly playerWrapper: AudioPlayerWrapper) {
-  }
-
-  get player() {
-    return this.playerWrapper.getPlayer()
-  }
-
-  async enqueue(filePath: string) {
-    this.queue.push(filePath)
-    if (!this.isPlaying()) {
-      this.playNext()
+    constructor(private readonly playerWrapper: AudioPlayerWrapper) {
     }
-  }
 
-  playNext() {
-    delete this.currentTrack
-    const player = this.player
-    if (player) {
-      const nextSong = this.queue.shift()
-      if (nextSong) {
-        player.play(TrackScheduler.createAudioResource(nextSong))
-        this.currentTrack = nextSong
-      }
+    get player() {
+        return this.playerWrapper.getPlayer()
     }
-  }
 
-  onPlayerStateChange(newState: AudioPlayerState) {
-    if (newState.status === AudioPlayerStatus.Idle) {
-      this.playNext()
+    async enqueue(trackStream: QueuedTrack) {
+        this.queue.push(trackStream)
+        if (!this.isPlaying()) {
+            this.playNext()
+        }
     }
-  }
 
-  private isPlaying() {
-    return this.player?.state.status === AudioPlayerStatus.Playing
-  }
+    playNext() {
+        delete this.currentTrack
+        const player = this.player
+        if (player) {
+            const nextSong = this.queue.shift()
+            if (nextSong) {
+                player.play(createAudioResource(nextSong.stream))
+                this.currentTrack = nextSong
+            }
+        }
+    }
 
-  private static createAudioResource(filePath: string) {
-    const options = filePath.endsWith('.opus') ? { inputType: StreamType.Opus } : {}
+    onPlayerStateChange(newState: AudioPlayerState) {
+        if (newState.status === AudioPlayerStatus.Idle) {
+            this.playNext()
+        }
+    }
 
-    return createAudioResource(filePath, options)
-  }
+    private isPlaying() {
+        return this.player?.state.status === AudioPlayerStatus.Playing
+    }
 }

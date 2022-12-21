@@ -1,13 +1,17 @@
-import { GuildExtension } from "./GuildExtension"
+import { GuildExtension } from './GuildExtension'
 
 export class GuildStorage {
-  static guilds: Record<string, GuildExtension> = {}
+    static guilds: Record<string, GuildExtension> = {}
 
-  static getItem(guildId: string) {
-    if (!(guildId in this.guilds)) {
-      this.guilds[guildId] = new GuildExtension(guildId)
+    static getItem(guildId: string) {
+        if (!(guildId in this.guilds)) {
+            this.assignNewGuildExtension(guildId)
+        }
+
+        return this.guilds[guildId]
     }
 
-    return this.guilds[guildId]
-  }
+    private static assignNewGuildExtension(guildId: string) {
+        this.guilds[guildId] = new GuildExtension(guildId)
+    }
 }
