@@ -1,19 +1,20 @@
-import axios from 'axios'
-import * as config from '../../../config/config.json'
+import { eachSlice } from 'utils'
+import { spawnSync } from 'child_process'
 
-import { videoIdToUrl } from 'lib/youtubeDownloader/findCache'
+const RESULT_SIZE = 5
 
-const ytSearchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&key=${config.youtubeApiToken}`
-const ytSearchUrlWithQuery = (q: string) => `${ytSearchUrl}&q=${encodeURI(q)}`
+const ytDlpSearch = (phrase: string): string => {
+    const args = `ytsearch${RESULT_SIZE}:"${phrase}" --flat-playlist --print title,url`
+    const cmd = spawnSync('yt-dlp', args.split(' '))
+    return cmd.stdout.toString().trim()
+}
 
-const videoResultBuilder = (item: YT.Item): VideoResult => ({
-    url: videoIdToUrl(item.id.videoId),
-    title: item.snippet.title,
-})
-
-export const youtubeSearch = async (q: string) => {
-    const response = await axios.get(ytSearchUrlWithQuery(q))
-    const searchResult: YT.SearchResult = response.data
-
-    return searchResult.items.map(videoResultBuilder)
+export const youtubeSearch = (phrase: string): VideoResult[] => {
+    const result: VideoResult[] = []
+    const lines = ytDlpSearch(phrase).split('\n')
+    for (const slice of eachSlice(lines, 2)) {
+        const [title, url] = slice
+        result.push({ title, url })
+    }
+    return result
 }

@@ -69,7 +69,7 @@ export abstract class BaseCommand {
   }
 
   protected getGuildExtension() {
-      return GuildStorage.getItem(this.guild.id)
+      return GuildStorage.getGuildExtension(this.guild.id)
   }
 
   private get klass() {

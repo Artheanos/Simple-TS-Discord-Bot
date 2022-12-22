@@ -16,6 +16,7 @@ import { UnpauseCommand } from 'commands/UnpauseCommand'
 export const routes: Record<string, Type<BaseCommand>> = {
     'delete':     DeleteCommand,
     'disconnect': DisconnectCommand,
+    'leave':      DisconnectCommand,
     'eval':       EvalCommand,
     'join':       JoinCommand,
     'lol':        LolCommand,

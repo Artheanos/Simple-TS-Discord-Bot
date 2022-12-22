@@ -3,7 +3,7 @@ import { GuildExtension } from './GuildExtension'
 export class GuildStorage {
     static guilds: Record<string, GuildExtension> = {}
 
-    static getItem(guildId: string) {
+    static getGuildExtension(guildId: string) {
         if (!(guildId in this.guilds)) {
             this.assignNewGuildExtension(guildId)
         }

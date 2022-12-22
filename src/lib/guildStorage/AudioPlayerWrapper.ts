@@ -13,7 +13,7 @@ export class AudioPlayerWrapper {
     private listener?: PlayerListener
 
     constructor(
-    private readonly guildId: string,
+        private readonly guildId: string,
     ) {
     }
 
@@ -25,7 +25,7 @@ export class AudioPlayerWrapper {
         return this.player
     }
 
-    setListener(listener: (state: AudioPlayerState) => void) {
+    setListener(listener: PlayerListener) {
         this.listener = listener
     }
 

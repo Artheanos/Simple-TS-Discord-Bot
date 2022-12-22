@@ -6,7 +6,7 @@ import { getTitle } from 'lib/youtubeDownloader'
 import { isValidURL } from 'utils'
 import { streamTrack } from 'lib/youtubeDownloader/streamTrack'
 import { youtubeSearch } from 'lib/youtubeSearch'
-import { QueuedTrack } from "lib/guildStorage/types";
+import { QueuedTrack } from 'lib/guildStorage/types'
 
 export class PlayService {
     constructor(private message: Message, private track: string) {
@@ -25,7 +25,7 @@ export class PlayService {
         const responseMessage = await this.message.channel.send('Downloading')
 
         const videoInfo = await this.getVideoInfo()
-        const scheduler = GuildStorage.getItem(this.message.guildId!).scheduler
+        const scheduler = GuildStorage.getGuildExtension(this.message.guildId!).scheduler
         await scheduler.enqueue(videoInfo)
 
         if (scheduler.currentTrack) {

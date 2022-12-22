@@ -63,4 +63,10 @@ function capitalize(str: string) {
     return str[0].toUpperCase() + str.substring(1)
 }
 
-export { MyRandom, tmpSend, isValidURL, enumerateArray, initArray, awaitIfPromise, capitalize }
+function* eachSlice<T>(array: T[], sliceSize: number): Generator<T[]> {
+    for (let i = 0, l = array.length; i < l; i += sliceSize) {
+        yield array.slice(i, i + sliceSize)
+    }
+}
+
+export { MyRandom, tmpSend, isValidURL, enumerateArray, initArray, awaitIfPromise, capitalize, eachSlice }
