@@ -58,7 +58,8 @@
       "ts",
       "tsx",
       "js"
-    ]
+    ],
+    "moduleDirectories": ["node_modules", "src", "config"]
   },
   "eslintIgnore": ["node_modules"]
 }

@@ -1,8 +1,12 @@
 import { youtubeSearch } from '../../../src/lib/youtubeSearch'
 
 
-describe('Listing youtube videos', () => {
+describe('youtubeSearch', () => {
     it('returns something', async () => {
-        console.log(await youtubeSearch('dupa'))
+        const result = await youtubeSearch('dupą')
+        expect(result).toContainEqual({
+            url: 'https://www.youtube.com/watch?v=VOcSRzk7bKE',
+            title: 'Świnka dupa: Kamera taty świngi',
+        })
     })
 })

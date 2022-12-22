@@ -1,4 +1,4 @@
-import { getTitle } from '../../../src/lib/youtubeDownloader/getTitle'
+import { getTitle } from '../../../src/lib/youtubeDownloader'
 
 jest.setTimeout(10_000)
 
