@@ -63,9 +63,17 @@ function capitalize(str: string) {
     return str[0].toUpperCase() + str.substring(1)
 }
 
-function* eachSlice<T>(array: T[], sliceSize: number): Generator<T[]> {
-    for (let i = 0, l = array.length; i < l; i += sliceSize) {
-        yield array.slice(i, i + sliceSize)
+function* eachSlice<T>(array: Iterable<T>, sliceSize: number): Generator<T[]> {
+    let slice = []
+    for (const i of array) {
+        slice.push(i)
+        if (slice.length === sliceSize) {
+            yield slice
+            slice = []
+        }
+    }
+    if (slice.length) {
+        yield slice
     }
 }
 
