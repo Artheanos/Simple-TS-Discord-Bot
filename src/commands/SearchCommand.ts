@@ -1,6 +1,6 @@
 import { BaseCommand } from './BaseCommand'
 import { PlayService } from 'services/PlayService'
-import { youtubeSearch } from 'lib/youtubeSearch'
+import { search } from 'lib/yt-dlp'
 import { waitForNumberReaction } from 'services/waitForNumberReaction'
 import { enumerateArray } from 'utils'
 import { Formatters } from 'discord.js'
@@ -17,7 +17,7 @@ export class SearchCommand extends BaseCommand {
     }
 
     private async getVideoFromUser() {
-        const videos = await youtubeSearch(this.args.join(' '))
+        const videos = await search(this.args.join(' '), 5)
         const videoListMessage = await this.reply(Formatters.codeBlock(enumerateArray(videos.map(v => v.title))))
         const userResponse = await waitForNumberReaction(videoListMessage, this.message.author.id)
         const videoIndex = Number(userResponse) - 1
@@ -34,5 +34,3 @@ export class SearchCommand extends BaseCommand {
         return videos[videoIndex]
     }
 }
-
-

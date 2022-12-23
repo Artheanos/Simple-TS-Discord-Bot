@@ -1,11 +1,9 @@
 import { Message } from 'discord.js'
 
+import { getTitle, search, stream } from 'lib/yt-dlp'
 import { GuildStorage } from 'lib/guildStorage'
-import { JoinService } from './JoinService'
-import { getTitle } from 'lib/youtubeDownloader'
 import { isValidURL } from 'utils'
-import { streamTrack } from 'lib/youtubeDownloader/streamTrack'
-import { youtubeSearch } from 'lib/youtubeSearch'
+import { JoinService } from './JoinService'
 import { QueuedTrack } from 'lib/guildStorage/types'
 
 export class PlayService {
@@ -41,10 +39,10 @@ export class PlayService {
             title: getTitle(this.track),
         } : await this.getFirstResultFromYoutube()
 
-        return { ...video, stream: streamTrack(video.url) }
+        return { ...video, stream: stream(video.url) }
     }
 
     private async getFirstResultFromYoutube() {
-        return (await youtubeSearch(this.track))[0]
+        return (await search(this.track, 1))[0]
     }
 }

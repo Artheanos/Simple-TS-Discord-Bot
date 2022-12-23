@@ -1,1 +1,0 @@
-export { getTitle } from './getTitle'
