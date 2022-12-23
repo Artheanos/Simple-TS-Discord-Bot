@@ -1,29 +1,41 @@
-# This is a simple discord bot written in TypeScript
-Setup
----
-`yt-dlp` is required to play songs from Youtube
-#### First you have to configure the bot
+# This is a discord bot written in TypeScript
+## Setup
 
-* Go to the project folder
-* Edit `config/config.json` file
+### Install [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+### [Supply the discord token](#Configuration)
+### Native
 
-```json5
-{
-  "prefix": "$",          //Only commands following the prefix will work
-  "token": "1234",        //Your Bot's Token
-  "ownerId": "4321",      //Your discord account ID
-  "caseSensitive": false  //Replace with true if you want the commands to be case sensitive
-}
-```
-Note that if you don't specify ownerId, "ownerOnly" commands won't work
 * Install dependencies - run `yarn` while in the project's folder
 * Compile js - `yarn build`
 * Run it! - `yarn start`
 
 #### The bot should be running now
 
-Censor List
----
+### Docker
+
+* Build an image - `docker build -t tsbot .`
+* Run the image - `docker run -d --name tsbot-container tsbot`
+
+#### The bot should now be running on a docker container
+
+## Configuration
+
+* Go to the `$APP_ROOT/config`
+* Copy `config_example.json` to `config.json`
+* Edit `config/config.json` file
+
+The only field you have to change is the bot's token
+```json5
+{
+  "prefix": "$",          // Only commands following the prefix will work
+  "token": "1234",        // Your bot's discord Token
+  "ownerId": "4321",      // Your discord account ID
+  "caseSensitive": false  // Case sensitivity of commands
+}
+```
+Note that if you don't specify ownerId, "ownerOnly" commands won't work
+
+## Censor List
 `bot/config/censor_list.json` contains guilds and channels with banned words
 
 The structure is as follows
@@ -57,21 +69,29 @@ Example `censor_list.json`
 
 Adding your own commands
 ---
-`src/bot/commands` folder contains the bot's commands. File name is also the command's name.
+`src/commands` folder contains the bot's commands.
+The command's action is then executed if the user's input has been matched with the command's route.
+The routing is specified in the `src/routes.ts` file.
 
-See `src/bot/commands/test.ts` for a 'Hello World' example
+See `src/bot/commands/DisconnectCommand.ts` as an example
 ```ts
-export default class implements MyCommand {
-    about = "Test me!";
+export class DisconnectCommand extends BaseCommand {
+    static description = 'Disconnect command'
 
-    handleMessage({message, args, client}: MyCommandProps) {
-        message.channel.send('Hello world!');
+    action() {
+        getVoiceConnection(this.guild.id)?.disconnect()
     }
 }
+
 ```
 
-All you have to do is create a new file and export a class as default.
-Make sure your class implements `MyCommand`
-
-Your `handleMessage` method will be called with an argument of `MyCommandProps` type.
-
+`src/routes.ts`
+```ts
+export const routes: Record<string, Type<BaseCommand>> = {
+    'delete':     DeleteCommand,
+    'disconnect': DisconnectCommand,
+    'leave':      DisconnectCommand,
+    'eval':       EvalCommand,
+    ...
+}
+```
