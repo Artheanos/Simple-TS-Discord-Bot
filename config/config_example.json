@@ -1,7 +1,6 @@
 {
   "prefix": "$",
   "token": "1234",
-  "youtubeApiToken": "",
   "ownerId": "4321",
   "caseSensitive": false,
   "unknownCommandMessage": true,

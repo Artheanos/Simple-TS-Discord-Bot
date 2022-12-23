@@ -49,7 +49,7 @@ export abstract class BaseCommand {
       return this.message.channel.send(content)
   }
 
-  protected validate(): string | boolean {
+  protected validate(): string | true {
       const { minArgsLength, blacklist, whitelist, ownerOnly } = this.klass
 
       if (minArgsLength && this.args.length < minArgsLength) {
