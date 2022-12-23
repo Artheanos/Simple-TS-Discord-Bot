@@ -4,7 +4,7 @@ import config from 'config'
 import { FriendlyError } from 'FriendlyError'
 import { routes } from 'routes'
 import { TextChannelMessage } from 'interfaces/TextChannelMessage'
-import { tmpSend } from 'utils'
+import { tmpSend } from 'utils/discord'
 
 import { HelpCommand } from 'commands/HelpCommand'
 import { BaseCommand } from 'commands/BaseCommand'

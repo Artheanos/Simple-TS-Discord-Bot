@@ -1,9 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-
-function capitalize(str) {
-    return str[0].toUpperCase() + str.substring(1)
-}
+const { capitalize } = require('../src/utils/strings')
 
 const template = (name) =>
     `import { BaseCommand } from "./BaseCommand"

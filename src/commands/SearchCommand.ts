@@ -2,7 +2,7 @@ import { BaseCommand } from './BaseCommand'
 import { PlayService } from 'services/PlayService'
 import { search } from 'lib/yt-dlp'
 import { waitForNumberReaction } from 'services/waitForNumberReaction'
-import { enumerateArray } from 'utils'
+import { enumerateArray } from 'utils/arrays'
 import { Formatters } from 'discord.js'
 
 export class SearchCommand extends BaseCommand {

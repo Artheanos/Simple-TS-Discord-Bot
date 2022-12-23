@@ -4,7 +4,7 @@ import config from 'config'
 import { GuildStorage } from 'lib/guildStorage'
 import { TextChannelMessage } from 'interfaces/TextChannelMessage'
 import { UserScope } from 'UserScope'
-import { awaitIfPromise } from 'utils'
+import { awaitIfPromise } from 'utils/async'
 
 export abstract class BaseCommand {
     async perform() {

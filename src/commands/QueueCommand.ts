@@ -1,5 +1,5 @@
 import { BaseCommand } from './BaseCommand'
-import { enumerateArray } from 'utils'
+import { enumerateArray } from 'utils/arrays'
 
 export class QueueCommand extends BaseCommand {
     static description = 'Show currently queued tracks'
