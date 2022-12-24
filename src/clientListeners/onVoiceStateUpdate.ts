@@ -1,7 +1,7 @@
 import { getVoiceConnection, VoiceConnection } from '@discordjs/voice'
 
 import { client } from 'app'
-import { GuildStorage } from 'lib/guildStorage'
+import { GuildExtensionsManager } from 'lib/guildStorage'
 import { ClientEventListener } from 'clientListeners/types'
 
 const LEAVE_AFTER = 30_000
@@ -18,7 +18,7 @@ const onVoiceStateUpdate: ClientEventListener<'voiceStateUpdate'> = (oldState, n
     if (userLeft) {
         const botIsAlone = oldState.channel.members.size === 1
         if (botIsAlone) {
-            GuildStorage.getGuildExtension(oldState.guild.id).aloneTimeout = setTimeout(
+            GuildExtensionsManager.getGuildExtension(oldState.guild.id).aloneTimeout = setTimeout(
                 () => connection?.disconnect(),
                 LEAVE_AFTER,
             )
@@ -26,7 +26,7 @@ const onVoiceStateUpdate: ClientEventListener<'voiceStateUpdate'> = (oldState, n
     } else {
         const userJoined = oldState.channelId !== botVoiceChannelId && newState.channelId === botVoiceChannelId
         if (userJoined) {
-            const guildExtension = GuildStorage.getGuildExtension(oldState.guild.id)
+            const guildExtension = GuildExtensionsManager.getGuildExtension(oldState.guild.id)
             if (guildExtension.aloneTimeout) {
                 clearTimeout(guildExtension.aloneTimeout)
                 delete guildExtension.aloneTimeout

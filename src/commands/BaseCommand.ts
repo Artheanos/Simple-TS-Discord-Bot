@@ -1,7 +1,7 @@
 import { Client, Guild, Message, TextChannel } from 'discord.js'
 
 import config from 'config'
-import { GuildStorage } from 'lib/guildStorage'
+import { GuildExtensionsManager } from 'lib/guildStorage'
 import { TextChannelMessage } from 'interfaces/TextChannelMessage'
 import { UserScope } from 'UserScope'
 import { awaitIfPromise } from 'utils/async'
@@ -69,7 +69,7 @@ export abstract class BaseCommand {
   }
 
   protected getGuildExtension() {
-      return GuildStorage.getGuildExtension(this.guild.id)
+      return GuildExtensionsManager.getGuildExtension(this.guild.id)
   }
 
   private get klass() {

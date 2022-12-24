@@ -1,7 +1,7 @@
 import { Client, Message, TextBasedChannel, TextChannel } from 'discord.js'
 
 import config from 'config'
-import { FriendlyError } from 'FriendlyError'
+import { FriendlyError } from 'errors/FriendlyError'
 import { routes } from 'routes'
 import { TextChannelMessage } from 'interfaces/TextChannelMessage'
 import { tmpSend } from 'utils/discord'

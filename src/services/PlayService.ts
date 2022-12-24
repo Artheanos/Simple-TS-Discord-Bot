@@ -1,7 +1,7 @@
 import { Message } from 'discord.js'
 
 import { getTitle, search, stream } from 'lib/yt-dlp'
-import { GuildStorage } from 'lib/guildStorage'
+import { GuildExtensionsManager } from 'lib/guildStorage'
 import { isValidURL } from 'utils/strings'
 import { JoinService } from './JoinService'
 import { QueuedTrack } from 'lib/guildStorage/types'
@@ -23,7 +23,7 @@ export class PlayService {
         const responseMessage = await this.message.channel.send('Downloading')
 
         const videoInfo = await this.getVideoInfo()
-        const scheduler = GuildStorage.getGuildExtension(this.message.guildId!).scheduler
+        const scheduler = GuildExtensionsManager.getGuildExtension(this.message.guildId!).scheduler
         await scheduler.enqueue(videoInfo)
 
         if (scheduler.currentTrack) {

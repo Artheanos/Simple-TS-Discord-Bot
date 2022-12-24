@@ -23,4 +23,10 @@ client.on('ready', onReady)
 client.on('messageCreate', onMessageCreate)
 client.on('voiceStateUpdate', onVoiceStateUpdate)
 
+function close() {
+    console.log('Closing.')
+    client.destroy()
+}
+process.on('SIGTERM', close)
+
 client.login(config.token)

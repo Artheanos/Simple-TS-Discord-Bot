@@ -5,7 +5,7 @@ import {
     VoiceConnectionStatus,
 } from '@discordjs/voice'
 import { Message } from 'discord.js'
-import { FriendlyError } from 'FriendlyError'
+import { FriendlyError } from 'errors/FriendlyError'
 
 export class JoinService {
     constructor(private message: Message) {
