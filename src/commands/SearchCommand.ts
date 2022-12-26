@@ -1,9 +1,10 @@
+import { Formatters } from 'discord.js'
+
 import { BaseCommand } from './BaseCommand'
+import { enumerateArray } from 'utils/arrays'
 import { PlayService } from 'services/PlayService'
 import { search } from 'lib/yt-dlp'
 import { waitForNumberReaction } from 'services/waitForNumberReaction'
-import { enumerateArray } from 'utils/arrays'
-import { Formatters } from 'discord.js'
 
 export class SearchCommand extends BaseCommand {
     static description = 'Search for youtube videos and choose one of them'
