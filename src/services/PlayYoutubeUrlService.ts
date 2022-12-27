@@ -5,8 +5,9 @@ import { GuildExtensionsManager } from 'lib/guildStorage'
 import { isValidURL } from 'utils/strings'
 import { JoinService } from './JoinService'
 import { QueuedTrack } from 'lib/guildStorage/types'
+import { EnqueueTrackService } from 'services/EnqueueTrackService'
 
-export class PlayService {
+export class PlayYoutubeUrlService {
     constructor(private message: Message, private track: string) {
     }
 
@@ -21,16 +22,8 @@ export class PlayService {
 
     private async enqueueTrack() {
         const responseMessage = await this.message.channel.send('Downloading')
-
         const videoInfo = await this.getVideoInfo()
-        const scheduler = GuildExtensionsManager.getGuildExtension(this.message.guildId!).scheduler
-        await scheduler.enqueue(videoInfo)
-
-        if (scheduler.currentTrack) {
-            await responseMessage.edit(`Enqueued \`${videoInfo.title}\``)
-        } else {
-            await responseMessage.edit(`Now playing \`${videoInfo.title}\``)
-        }
+        new EnqueueTrackService(this.message, videoInfo, responseMessage).call()
     }
 
     private async getVideoInfo(): Promise<QueuedTrack> {

@@ -1,5 +1,6 @@
 import { Readable } from 'stream'
 
-export type QueuedTrack = VideoResult & {
+export type QueuedTrack = {
+    title: string
     stream: Readable
 }

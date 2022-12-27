@@ -1,0 +1,17 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model SavedTrack {
+  id         Int    @id @default(autoincrement())
+  userId     String
+  contentUrl String
+  title      String
+
+  @@unique([userId, title])
+}

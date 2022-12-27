@@ -12,6 +12,10 @@ import { SearchCommand } from 'commands/SearchCommand'
 import { ShutdownCommand } from 'commands/ShutdownCommand'
 import { SkipCommand } from 'commands/SkipCommand'
 import { UnpauseCommand } from 'commands/UnpauseCommand'
+import { ListSavedCommand } from 'commands/ListSavedCommand'
+import { PlaySavedCommand } from 'commands/PlaySavedCommand'
+import { SaveCommand } from 'commands/SaveCommand'
+import { RenameCommand } from 'commands/RenameCommand'
 
 export const routes: Record<string, Type<BaseCommand>> = {
     'delete':     DeleteCommand,
@@ -19,13 +23,17 @@ export const routes: Record<string, Type<BaseCommand>> = {
     'leave':      DisconnectCommand,
     'eval':       EvalCommand,
     'join':       JoinCommand,
+    'list':       ListSavedCommand,
     'lol':        LolCommand,
     'lolek':      LolCommand,
     'pause':      PauseCommand,
     'play':       PlayCommand,
     'p':          PlayCommand,
+    'rename':     RenameCommand,
     'rule34':     Rule34Command,
     'queue':      QueueCommand,
+    'save':       SaveCommand,
+    'saved':      PlaySavedCommand,
     'shutdown':   ShutdownCommand,
     'search':     SearchCommand,
     'skip':       SkipCommand,

@@ -2,7 +2,7 @@ import { Formatters } from 'discord.js'
 
 import { BaseCommand } from './BaseCommand'
 import { enumerateArray } from 'utils/arrays'
-import { PlayService } from 'services/PlayService'
+import { PlayYoutubeUrlService } from 'services/PlayYoutubeUrlService'
 import { search } from 'lib/yt-dlp'
 import { waitForNumberReaction } from 'services/waitForNumberReaction'
 
@@ -13,7 +13,7 @@ export class SearchCommand extends BaseCommand {
     async action() {
         const video = await this.getVideoFromUser()
         if (video) {
-            await new PlayService(this.message, video.url).call()
+            await new PlayYoutubeUrlService(this.message, video.url).call()
         }
     }
 

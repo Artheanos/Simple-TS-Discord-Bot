@@ -11,6 +11,8 @@ RUN yarn
 RUN yarn add ffmpeg-static
 
 COPY . /app/
+RUN yarn prisma migrate deploy
+RUN yarn prisma generate
 RUN yarn build
 
 CMD ["node", "dist/src/app.js"]
