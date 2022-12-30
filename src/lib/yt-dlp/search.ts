@@ -9,12 +9,13 @@ export const search = async (phrase: string, size: number): Promise<VideoResult[
 }
 
 const runSearchCommand = async (phrase: string, size: number): Promise<string[]> => {
-    const args = `ytsearch${size}:"${phrase}" --flat-playlist --print %(title)s\n%(url)s`
-    const cmd = spawn('yt-dlp', args.split(' '))
+    const cmd = spawn('yt-dlp', [
+        `ytsearch${size}:${phrase}`, '--flat-playlist', '--print', '%(title)s\n%(url)s',
+    ])
     return await readStdout(cmd.stdout)
 }
 
-const readStdout = (readable: Readable): Promise<string[]> => {
+export const readStdout = (readable: Readable): Promise<string[]> => {
     return new Promise((resolve) => {
         const result: string[] = []
         readable.on('data', (buffer: Buffer) => result.push(buffer.toString()))

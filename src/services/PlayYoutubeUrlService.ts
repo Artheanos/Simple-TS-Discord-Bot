@@ -11,7 +11,7 @@ export class PlayYoutubeUrlService {
     constructor(private message: Message, private track: string) {
     }
 
-    async call() {
+    async call(): Promise<void> {
         try {
             await new JoinService(this.message).call()
             this.enqueueTrack()
@@ -20,22 +20,25 @@ export class PlayYoutubeUrlService {
         }
     }
 
-    private async enqueueTrack() {
-        const responseMessage = await this.message.channel.send('Downloading')
-        const videoInfo = await this.getVideoInfo()
-        new EnqueueTrackService(this.message, videoInfo, responseMessage).call()
+    private enqueueTrack(): void {
+        Promise.all([
+            this.message.channel.send('Downloading'),
+            this.getVideoInfo(),
+        ]).then(([responseMessage, videoInfo]) => {
+            new EnqueueTrackService(this.message, videoInfo, responseMessage).call()
+        })
     }
 
     private async getVideoInfo(): Promise<QueuedTrack> {
         const video = isValidURL(this.track) ? {
             url: this.track,
-            title: getTitle(this.track),
+            title: await getTitle(this.track),
         } : await this.getFirstResultFromYoutube()
 
         return { ...video, stream: stream(video.url) }
     }
 
-    private async getFirstResultFromYoutube() {
+    private async getFirstResultFromYoutube(): Promise<VideoResult> {
         return (await search(this.track, 1))[0]
     }
 }

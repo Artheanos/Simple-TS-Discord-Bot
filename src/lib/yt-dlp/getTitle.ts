@@ -1,7 +1,8 @@
-import { spawnSync } from 'child_process'
+import { spawn } from 'child_process'
+import { readStdout } from 'lib/yt-dlp/search'
 
-export const getTitle = (url: string): string => {
+export const getTitle = async (url: string): Promise<string> => {
     const command = `${url} --print title`
-    const cmd = spawnSync('yt-dlp', command.split(' '))
-    return cmd.stdout.toString().trim()
+    const cmd = spawn('yt-dlp', command.split(' '))
+    return (await readStdout(cmd.stdout))[0]
 }
