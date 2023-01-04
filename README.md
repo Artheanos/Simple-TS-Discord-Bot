@@ -1,10 +1,10 @@
 # This is a discord bot written in TypeScript
 ## Setup
 
-### Install [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 ### [Supply the discord token](#Configuration)
 ### Native
 
+* Install [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 * Install dependencies - run `yarn` while in the project's folder
 * Compile js - `yarn build`
 * Run it! - `yarn start`
