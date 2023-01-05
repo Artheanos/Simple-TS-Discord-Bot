@@ -3,8 +3,9 @@ FROM node:latest
 WORKDIR /app/
 
 # install yt-dlp
-RUN curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
-RUN chmod a+rx /usr/local/bin/yt-dlp
+RUN apt update -y
+RUN apt install python3-pip -y
+RUN python3 -m pip install --no-deps -U yt-dlp
 
 COPY ./package.json ./yarn.lock /app/
 RUN yarn
