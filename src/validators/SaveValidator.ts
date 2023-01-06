@@ -1,10 +1,7 @@
-import { Message } from 'discord.js'
-import { BaseCommand } from 'commands/BaseCommand'
 import { isValidURL } from 'utils/strings'
+import { BaseValidator } from 'validators/BaseValidator'
 
-export class SaveValidator {
-    constructor(private command: BaseCommand) {
-    }
+export class SaveValidator extends BaseValidator {
 
     call(): string | undefined {
         switch (this.command.args.length) {

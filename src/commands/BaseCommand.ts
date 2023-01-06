@@ -1,10 +1,11 @@
 import { Client, Guild, Message, TextChannel } from 'discord.js'
 
 import config from 'config'
+import { awaitIfPromise } from 'utils/async'
+import { BaseValidator } from 'validators/BaseValidator'
 import { GuildExtensionsManager } from 'lib/guildStorage'
 import { TextChannelMessage } from 'interfaces/TextChannelMessage'
 import { UserScope } from 'UserScope'
-import { awaitIfPromise } from 'utils/async'
 
 export abstract class BaseCommand {
     async perform() {
@@ -29,6 +30,7 @@ export abstract class BaseCommand {
     protected static minArgsLength?: number
     protected static blacklist?: UserScope
     protected static whitelist?: UserScope
+    protected static validator?: Type<BaseValidator>
     protected static ownerOnly = false
 
     public message: Message
@@ -43,34 +45,38 @@ export abstract class BaseCommand {
         this.guild = message.guild
     }
 
-  protected abstract action(): string | void | Promise<string | void>
+    protected abstract action(): string | void | Promise<string | void>
 
-  protected reply(content: string) {
-      return this.message.channel.send(content)
-  }
+    protected reply(content: string) {
+        return this.message.channel.send(content)
+    }
 
-  protected validate(): string | undefined {
-      const { minArgsLength, blacklist, whitelist, ownerOnly } = this.klass
+    protected validate(): string | undefined {
+        const { minArgsLength, blacklist, whitelist, ownerOnly, validator } = this.klass
 
-      if (minArgsLength && this.args.length < minArgsLength) {
-          return 'Wrong number of args'
-      }
-      if (blacklist?.includes(this.message)) {
-          return 'You are in the blacklist'
-      }
-      if (whitelist?.includes(this.message)) {
-          return 'You are not in the whitelist'
-      }
-      if (ownerOnly && this.message.author.id !== config.ownerId) {
-          return 'Owner only'
-      }
-  }
+        if (minArgsLength && this.args.length < minArgsLength) {
+            return 'Wrong number of args'
+        }
+        if (blacklist?.includes(this.message)) {
+            return 'You are in the blacklist'
+        }
+        if (whitelist?.includes(this.message)) {
+            return 'You are not in the whitelist'
+        }
+        if (ownerOnly && this.message.author.id !== config.ownerId) {
+            return 'Owner only'
+        }
+        if (validator) {
+            const validatorResult = new validator(this).call()
+            if (validatorResult) return validatorResult
+        }
+    }
 
-  protected getGuildExtension() {
-      return GuildExtensionsManager.getGuildExtension(this.guild.id)
-  }
+    protected getGuildExtension() {
+        return GuildExtensionsManager.getGuildExtension(this.guild.id)
+    }
 
-  private get klass() {
-      return this.constructor as typeof BaseCommand
-  }
+    private get klass() {
+        return this.constructor as typeof BaseCommand
+    }
 }

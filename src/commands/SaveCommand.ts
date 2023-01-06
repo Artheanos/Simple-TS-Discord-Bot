@@ -5,6 +5,7 @@ import { SaveValidator } from 'validators/SaveValidator'
 export class SaveCommand extends BaseCommand {
     static description = 'Save an audio file with a tag for easy access'
     static minArgsLength = 1
+    static validator = SaveValidator
 
     async action() {
         try {
@@ -41,14 +42,7 @@ export class SaveCommand extends BaseCommand {
         })
     }
 
-    get title(): string {
+    private get title(): string {
         return this.args[0]
-    }
-
-    validate(): string | undefined {
-        const superValidation = super.validate()
-        if (superValidation) return superValidation
-
-        return new SaveValidator(this).call()
     }
 }
