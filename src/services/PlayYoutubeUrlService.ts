@@ -1,7 +1,6 @@
 import { Message } from 'discord.js'
 
 import { getTitle, search, stream } from 'lib/yt-dlp'
-import { GuildExtensionsManager } from 'lib/guildStorage'
 import { isValidURL } from 'utils/strings'
 import { JoinService } from './JoinService'
 import { QueuedTrack } from 'lib/guildStorage/types'

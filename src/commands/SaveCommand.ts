@@ -1,43 +1,54 @@
 import { prisma } from 'app'
 import { BaseCommand } from './BaseCommand'
+import { SaveValidator } from 'validators/SaveValidator'
 
 export class SaveCommand extends BaseCommand {
     static description = 'Save an audio file with a tag for easy access'
     static minArgsLength = 1
 
     async action() {
-        const title = this.args[0]
         try {
-            await this.createRecord(title)
-            return `The track \`${title}\` has been saved`
+            await this.performSave()
+            return `The track \`${this.title}\` has been saved`
         } catch (e) {
-            return `You already have the track ${title}`
+            return `You already have the track ${this.title}`
         }
     }
 
-    validate(): string | true {
-        const superValidation = super.validate()
-        if (superValidation) return superValidation
-
-        const track = this.message.attachments.first()
-        if (!track) {
-            return 'This command requires an audio attachment'
+    private async performSave() {
+        if (this.args.length === 1) {
+            await this.saveFile()
+        } else {
+            await this.saveUrl()
         }
-
-        if (!track.contentType?.startsWith('audio/')) {
-            return 'This attachment is not an audio file'
-        }
-
-        return true
     }
 
-    private async createRecord(title: string) {
+    private async saveFile() {
+        await this.createRecord(this.message.attachments.first()!.url)
+    }
+
+    private async saveUrl() {
+        await this.createRecord(this.args[1])
+    }
+
+    private async createRecord(contentUrl: string) {
         await prisma.savedTrack.create({
             data: {
-                contentUrl: this.message.attachments.first()!.url,
-                title,
+                contentUrl,
+                title: this.title,
                 userId: this.message.author.id,
             },
         })
+    }
+
+    get title(): string {
+        return this.args[0]
+    }
+
+    validate(): string | undefined {
+        const superValidation = super.validate()
+        if (superValidation) return superValidation
+
+        return new SaveValidator(this).call()
     }
 }

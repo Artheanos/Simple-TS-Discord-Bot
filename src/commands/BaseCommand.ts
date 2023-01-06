@@ -14,7 +14,7 @@ export abstract class BaseCommand {
             this.reply(validationResult)
             return
         }
-        if (!validationResult) {
+        if (validationResult !== undefined) {
             return
         }
 
@@ -31,10 +31,10 @@ export abstract class BaseCommand {
     protected static whitelist?: UserScope
     protected static ownerOnly = false
 
-    protected message: Message
-    protected channel: TextChannel
-    protected guild: Guild
-    protected args: string[]
+    public message: Message
+    public channel: TextChannel
+    public guild: Guild
+    public args: string[]
 
     constructor(message: TextChannelMessage, protected client: Client) {
         this.message = message
@@ -49,7 +49,7 @@ export abstract class BaseCommand {
       return this.message.channel.send(content)
   }
 
-  protected validate(): string | true {
+  protected validate(): string | undefined {
       const { minArgsLength, blacklist, whitelist, ownerOnly } = this.klass
 
       if (minArgsLength && this.args.length < minArgsLength) {
@@ -64,8 +64,6 @@ export abstract class BaseCommand {
       if (ownerOnly && this.message.author.id !== config.ownerId) {
           return 'Owner only'
       }
-
-      return true
   }
 
   protected getGuildExtension() {

@@ -1,9 +1,7 @@
 import { BaseCommand } from './BaseCommand'
 import { prisma } from 'app'
-import { enumerateArray } from 'utils/arrays'
-import { spawn } from 'child_process'
-import { Readable } from 'stream'
 import { PlayDiscordUrlService } from 'services/PlayDiscordUrlService'
+import { PlayYoutubeUrlService } from 'services/PlayYoutubeUrlService'
 
 export class PlaySavedCommand extends BaseCommand {
     static description = 'Plays a saved track'
@@ -14,6 +12,10 @@ export class PlaySavedCommand extends BaseCommand {
         const track = await prisma.savedTrack.findFirst({ where: { title } })
         if (!track) return `You don't have a track called ${title}`
 
-        await new PlayDiscordUrlService(this.message, track).call()
+        if (track.contentUrl.startsWith('https://cdn.discordapp.com')) {
+            await new PlayDiscordUrlService(this.message, track).call()
+        } else {
+            await new PlayYoutubeUrlService(this.message, track.contentUrl).call()
+        }
     }
 }
