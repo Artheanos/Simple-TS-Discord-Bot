@@ -12,4 +12,15 @@ export class GuildExtension {
 
         this.playerWrapper.setListener(state => this.scheduler.onPlayerStateChange(state))
     }
+
+    setAloneTimeout(callback: () => unknown, timeout: number) {
+        this.aloneTimeout = setTimeout(callback, timeout)
+    }
+
+    removeAloneTimeout() {
+        if (this.aloneTimeout === undefined) return
+
+        clearTimeout(this.aloneTimeout)
+        delete this.aloneTimeout
+    }
 }

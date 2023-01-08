@@ -1,5 +1,5 @@
 import 'module-alias/register'
-import { Client, Intents } from 'discord.js'
+import { Client, GatewayIntentBits, Partials } from 'discord.js'
 
 import config from 'config'
 import { CommandManager } from 'CommandManager'
@@ -8,14 +8,15 @@ import { PrismaClient } from '@prisma/client'
 
 export const client = new Client({
     intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-        Intents.FLAGS.DIRECT_MESSAGES,
-        Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-        Intents.FLAGS.GUILD_VOICE_STATES,
+        GatewayIntentBits.DirectMessageReactions,
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildVoiceStates,
+        GatewayIntentBits.MessageContent,
     ],
-    partials: ['CHANNEL'],
+    partials: [Partials.Channel],
 })
 
 export const commandManager = new CommandManager(client)

@@ -36,7 +36,7 @@ export class AudioPlayerWrapper {
             throw `Client is not in any voice channel belonging to the guild#${this.guildId}`
         }
 
-        connection.on<'stateChange'>('stateChange', (oldState, newState) => {
+        connection.on('stateChange', (oldState, newState) => {
             if (newState.status === 'disconnected' || newState.status === 'destroyed') {
                 delete this.player
             }
@@ -44,7 +44,7 @@ export class AudioPlayerWrapper {
 
         const player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Pause } })
         connection?.subscribe(player)
-        player.on<'stateChange'>('stateChange', (_, newState) => this.listener?.(newState))
+        player.on('stateChange', (_, newState) => this.listener?.(newState))
         this.player = player
     }
 }

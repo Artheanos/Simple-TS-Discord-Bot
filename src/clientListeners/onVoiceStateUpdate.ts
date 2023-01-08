@@ -14,24 +14,18 @@ const onVoiceStateUpdate: ClientEventListener<'voiceStateUpdate'> = (oldState, n
     const botVoiceChannelId: string | null | undefined = connection?.joinConfig.channelId
 
     const userLeft: boolean = oldState.channelId === botVoiceChannelId && newState.channelId !== botVoiceChannelId
+    const userJoined: boolean = oldState.channelId !== botVoiceChannelId && newState.channelId === botVoiceChannelId
 
     if (userLeft) {
         const botIsAlone = oldState.channel.members.size === 1
         if (botIsAlone) {
-            GuildExtensionsManager.getGuildExtension(oldState.guild.id).aloneTimeout = setTimeout(
+            GuildExtensionsManager.getGuildExtension(oldState.guild.id).setAloneTimeout(
                 () => connection?.disconnect(),
                 LEAVE_AFTER,
             )
         }
-    } else {
-        const userJoined = oldState.channelId !== botVoiceChannelId && newState.channelId === botVoiceChannelId
-        if (userJoined) {
-            const guildExtension = GuildExtensionsManager.getGuildExtension(oldState.guild.id)
-            if (guildExtension.aloneTimeout) {
-                clearTimeout(guildExtension.aloneTimeout)
-                delete guildExtension.aloneTimeout
-            }
-        }
+    } else if (userJoined) {
+        GuildExtensionsManager.getGuildExtension(oldState.guild.id).removeAloneTimeout()
     }
 }
 
