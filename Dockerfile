@@ -16,4 +16,5 @@ RUN npx prisma migrate deploy
 RUN npx prisma generate
 RUN npm run build
 
+VOLUME ["/app/data"]
 CMD ["node", "dist/src/app.js"]

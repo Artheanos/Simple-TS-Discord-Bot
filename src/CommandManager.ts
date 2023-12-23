@@ -40,6 +40,9 @@ export class CommandManager {
         commandInstance.perform().catch(e => {
             if (e instanceof FriendlyError && e.message) {
                 message.channel.send(e.message)
+            } else {
+                console.error(e)
+                message.channel.send('An error occurred')
             }
         })
     }

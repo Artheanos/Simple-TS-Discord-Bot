@@ -8,12 +8,8 @@ export class SaveCommand extends BaseCommand {
     static validator = SaveValidator
 
     async action() {
-        try {
-            await this.performSave()
-            return `The track \`${this.title}\` has been saved`
-        } catch (e) {
-            return `You already have the track ${this.title}`
-        }
+        await this.performSave()
+        return `The track \`${this.title}\` has been saved`
     }
 
     private async performSave() {
@@ -33,8 +29,17 @@ export class SaveCommand extends BaseCommand {
     }
 
     private async createRecord(contentUrl: string) {
-        await prisma.savedTrack.create({
-            data: {
+        await prisma.savedTrack.upsert({
+            where: {
+                userId_title: {
+                    title: this.title,
+                    userId: this.message.author.id,
+                },
+            },
+            update: {
+                contentUrl,
+            },
+            create: {
                 contentUrl,
                 title: this.title,
                 userId: this.message.author.id,
