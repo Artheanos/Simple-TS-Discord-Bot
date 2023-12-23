@@ -3,19 +3,20 @@ import { DeleteCommand } from 'commands/DeleteCommand'
 import { DisconnectCommand } from 'commands/DisconnectCommand'
 import { EvalCommand } from 'commands/EvalCommand'
 import { JoinCommand } from 'commands/JoinCommand'
+import { ListSavedCommand } from 'commands/ListSavedCommand'
 import { LolCommand } from 'commands/LolCommand'
+import { MyInstantsCommand } from 'commands/MyInstantsCommand'
 import { PauseCommand } from 'commands/PauseCommand'
 import { PlayCommand } from 'commands/PlayCommand'
+import { PlaySavedCommand } from 'commands/PlaySavedCommand'
 import { QueueCommand } from 'commands/QueueCommand'
+import { RenameCommand } from 'commands/RenameCommand'
 import { Rule34Command } from 'commands/Rule34Command'
+import { SaveCommand } from 'commands/SaveCommand'
 import { SearchCommand } from 'commands/SearchCommand'
 import { ShutdownCommand } from 'commands/ShutdownCommand'
 import { SkipCommand } from 'commands/SkipCommand'
 import { UnpauseCommand } from 'commands/UnpauseCommand'
-import { ListSavedCommand } from 'commands/ListSavedCommand'
-import { PlaySavedCommand } from 'commands/PlaySavedCommand'
-import { SaveCommand } from 'commands/SaveCommand'
-import { RenameCommand } from 'commands/RenameCommand'
 
 export const routes: Record<string, Type<BaseCommand>> = {
     'delete':     DeleteCommand,
@@ -41,4 +42,6 @@ export const routes: Record<string, Type<BaseCommand>> = {
     'unpause':    UnpauseCommand,
     'resume':     UnpauseCommand,
     'routes':     Rule34Command,
+    'myinstants': MyInstantsCommand,
+    'mi':         MyInstantsCommand,
 }

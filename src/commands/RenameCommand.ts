@@ -1,5 +1,4 @@
 import { BaseCommand } from './BaseCommand'
-import { enumerateArray } from 'utils/arrays'
 import { prisma } from 'app'
 import { SavedTrack } from '@prisma/client'
 

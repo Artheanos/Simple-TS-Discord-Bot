@@ -25,12 +25,12 @@
     "@discordjs/voice": "^0.16.1",
     "@prisma/client": "^5.7.1",
     "axios": "^1.6.2",
-    "bent": "^7.3.12",
     "discord.js": "^14.14.1",
     "eslint": "^8.56.0",
     "eslint-plugin-jest": "^27.6.0",
     "libsodium-wrappers": "^0.7.13",
-    "module-alias": "^2.2.3"
+    "module-alias": "^2.2.3",
+    "ts-jest": "^29.1.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",

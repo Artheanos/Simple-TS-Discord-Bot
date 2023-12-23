@@ -1,6 +1,6 @@
 import { BaseCommand } from './BaseCommand'
 import { prisma } from 'app'
-import { PlayDiscordUrlService } from 'services/PlayDiscordUrlService'
+import { PlayUrlService } from 'services/PlayUrlService'
 import { PlayYoutubeUrlService } from 'services/PlayYoutubeUrlService'
 
 export class PlaySavedCommand extends BaseCommand {
@@ -13,7 +13,7 @@ export class PlaySavedCommand extends BaseCommand {
         if (!track) return `You don't have a track called ${title}`
 
         if (track.contentUrl.startsWith('https://cdn.discordapp.com')) {
-            await new PlayDiscordUrlService(this.message, track).call()
+            await new PlayUrlService(this.message, { title: track.title, url: track.contentUrl }).call()
         } else {
             await new PlayYoutubeUrlService(this.message, track.contentUrl).call()
         }
