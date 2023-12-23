@@ -1,19 +1,19 @@
-FROM node:latest
+FROM node:20.9.0
 
 WORKDIR /app/
 
 # install yt-dlp
 RUN apt update -y
 RUN apt install python3-pip -y
-RUN python3 -m pip install --no-deps -U yt-dlp
+RUN python3 -m pip install --no-deps --break-system-packages -U yt-dlp
 
-COPY ./package.json ./yarn.lock /app/
-RUN yarn
-RUN yarn add ffmpeg-static
+COPY ./package.json ./package-lock.json /app/
+RUN npm i
+RUN npm i ffmpeg-static
 
 COPY . /app/
-RUN yarn prisma migrate deploy
-RUN yarn prisma generate
-RUN yarn build
+RUN npx prisma migrate deploy
+RUN npx prisma generate
+RUN npm run build
 
 CMD ["node", "dist/src/app.js"]
