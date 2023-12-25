@@ -15,15 +15,13 @@ const onVoiceStateUpdate: ClientEventListener<'voiceStateUpdate'> = (oldState, n
 
     const userLeft: boolean = oldState.channelId === botVoiceChannelId && newState.channelId !== botVoiceChannelId
     const userJoined: boolean = oldState.channelId !== botVoiceChannelId && newState.channelId === botVoiceChannelId
+    const botIsAlone = oldState.channel.members.size === 1
 
-    if (userLeft) {
-        const botIsAlone = oldState.channel.members.size === 1
-        if (botIsAlone) {
-            GuildExtensionsManager.getGuildExtension(oldState.guild.id).setAloneTimeout(
-                () => connection?.disconnect(),
-                LEAVE_AFTER,
-            )
-        }
+    if (userLeft && botIsAlone) {
+        GuildExtensionsManager.getGuildExtension(oldState.guild.id).setAloneTimeout(
+            () => connection?.disconnect(),
+            LEAVE_AFTER,
+        )
     } else if (userJoined) {
         GuildExtensionsManager.getGuildExtension(oldState.guild.id).removeAloneTimeout()
     }

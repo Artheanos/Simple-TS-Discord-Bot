@@ -1,7 +1,7 @@
 import axios, { isAxiosError } from 'axios'
 import { URLSearchParams } from 'url'
 
-export const findMp3s = async (query: string): Promise<string[]> => {
+export const findMp3Paths = async (query: string): Promise<string[]> => {
     try {
         const response = await axios.get<string>(urlBuilder(query))
         return findMediaInHtml(response.data)
