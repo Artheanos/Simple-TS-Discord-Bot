@@ -1,10 +1,10 @@
-import { Client, PresenceData } from 'discord.js'
+import { PresenceData } from 'discord.js'
 import config from 'config'
 import { ClientEventListener } from 'clientListeners/types'
 
 const onReady: ClientEventListener<'ready'> = (client) => {
     client.user!.setPresence(config.defaultPresence as PresenceData)
-    console.log('Ready')
+    import('cron')
 }
 
 export default onReady

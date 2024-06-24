@@ -1,6 +1,6 @@
 import { BaseCommand } from './BaseCommand'
-import { prisma } from 'app'
 import { enumerateArray } from 'utils/arrays'
+import { prisma } from 'initializers/prisma'
 
 export class ListSavedCommand extends BaseCommand {
     static description = 'Lists saved tracks'

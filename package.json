@@ -5,9 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "node_modules/.bin/tsc",
-    "build-start": "yarn run build && yarn run start",
+    "build-start": "npm run build && npm run start",
     "lint": "eslint src/**/*.[tj]s",
-    "start": "node dist/src/app.js",
+    "start": "node dist/src/initializers/app.js",
     "types": "tsc --noEmit"
   },
   "repository": {
@@ -30,11 +30,13 @@
     "eslint-plugin-jest": "^27.6.0",
     "libsodium-wrappers": "^0.7.13",
     "module-alias": "^2.2.3",
+    "node-cron": "^3.0.3",
     "ts-jest": "^29.1.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.5",
+    "@types/node-cron": "^3.0.11",
     "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",

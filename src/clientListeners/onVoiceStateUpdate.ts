@@ -1,8 +1,8 @@
 import { getVoiceConnection, VoiceConnection } from '@discordjs/voice'
 
-import { client } from 'app'
 import { GuildExtensionsManager } from 'lib/guildStorage'
 import { ClientEventListener } from 'clientListeners/types'
+import { client } from 'initializers/client'
 
 const LEAVE_AFTER = 30_000
 

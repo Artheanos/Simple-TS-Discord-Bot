@@ -1,5 +1,5 @@
-import { prisma } from 'app'
 import { BaseCommand } from './BaseCommand'
+import { prisma } from 'initializers/prisma'
 
 export class LolCommand extends BaseCommand {
     static description = 'Lolito'

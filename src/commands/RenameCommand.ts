@@ -1,6 +1,6 @@
 import { BaseCommand } from './BaseCommand'
-import { prisma } from 'app'
 import { SavedTrack } from '@prisma/client'
+import { prisma } from 'initializers/prisma'
 
 export class RenameCommand extends BaseCommand {
     static description = 'Change the name of your saved track'

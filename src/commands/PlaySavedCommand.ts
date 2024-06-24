@@ -1,7 +1,7 @@
 import { BaseCommand } from './BaseCommand'
-import { prisma } from 'app'
 import { PlayUrlService } from 'services/PlayUrlService'
 import { PlayYoutubeUrlService } from 'services/PlayYoutubeUrlService'
+import { prisma } from 'initializers/prisma'
 
 export class PlaySavedCommand extends BaseCommand {
     static description = 'Plays a saved track'

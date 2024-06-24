@@ -1,6 +1,6 @@
 import censor from 'censor'
-import { commandManager } from 'app'
 import { ClientEventListener } from 'clientListeners/types'
+import { commandManager } from 'initializers/commandManager'
 
 const onMessageCreate: ClientEventListener<'messageCreate'> = (message) => {
     const messageIsFromTheApp = message.author.id === message.client.user!.id
