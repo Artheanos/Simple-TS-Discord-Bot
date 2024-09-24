@@ -9,10 +9,15 @@ export class MyInstantsCommand extends BaseCommand {
     static DEFAULT_TRACK_NAME = 'MP3'
 
     async action(): Promise<string | void> {
+        const infoMessage = this.channel.send('Searching')
         const track = await this.getTrack()
-        if (!track) return 'No results'
+        if (!track) {
+            infoMessage.then(i => i.edit('No results'))
+            return
+        }
 
         await new PlayUrlService(this.message, track).call()
+        infoMessage.then(msg => msg.delete())
     }
 
     async getTrack(): Promise<VideoResult | null> {

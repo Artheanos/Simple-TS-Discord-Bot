@@ -4,10 +4,7 @@ import { commandManager } from 'initializers/commandManager'
 
 const onMessageCreate: ClientEventListener<'messageCreate'> = (message) => {
     const messageIsFromTheApp = message.author.id === message.client.user!.id
-    if (messageIsFromTheApp)
-        return
-
-    if (censor(message))
+    if (messageIsFromTheApp || censor(message) || !message.inGuild())
         return
 
     commandManager.processMessage(message)

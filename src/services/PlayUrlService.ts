@@ -6,7 +6,7 @@ import { JoinService } from './JoinService'
 import { Readable } from 'stream'
 
 export class PlayUrlService {
-    constructor(private message: Message, private track: VideoResult) {
+    constructor(private message: Message<true>, private track: VideoResult) {
     }
 
     async call() {

@@ -1,4 +1,4 @@
-import { Client, Message, TextBasedChannel, TextChannel } from 'discord.js'
+import { Client, Message, SendableChannels } from 'discord.js'
 
 import config from 'config'
 import { FriendlyError } from 'errors/FriendlyError'
@@ -18,14 +18,14 @@ export class CommandManager {
     constructor(private client: Client) {
     }
 
-    processMessage(message: Message) {
+    processMessage(message: Message<true>) {
         if (!message.content.startsWith(config.prefix)) {
             return
         }
 
         const commandName = CommandManager.resolveCommandName(message)
 
-        if (commandName in routes && message.channel instanceof TextChannel) {
+        if (commandName in routes) {
             this.performCommand(commandName, message as TextChannelMessage)
         } else if (config.unknownCommandMessage) {
             CommandManager.unknownCommandMessage(message.channel, commandName)
@@ -53,7 +53,7 @@ export class CommandManager {
         return config.caseSensitive ? commandName : commandName.toLowerCase()
     }
 
-    private static unknownCommandMessage = (channel: TextBasedChannel, commandName: string): void => {
+    private static unknownCommandMessage = (channel: SendableChannels, commandName: string): void => {
         tmpSend(channel, `Unknown command \`${commandName}\``, 4000)
     }
 }

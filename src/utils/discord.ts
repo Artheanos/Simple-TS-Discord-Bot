@@ -1,6 +1,6 @@
-import { Message, TextBasedChannel } from 'discord.js'
+import { Message, SendableChannels } from 'discord.js'
 
-export async function tmpSend(channel: TextBasedChannel, messageContent: string, deleteAfter: number) {
+export async function tmpSend(channel: SendableChannels, messageContent: string, deleteAfter: number) {
     const msg = await channel.send(messageContent)
     setTimeout(() => msg.delete(), deleteAfter)
     return msg

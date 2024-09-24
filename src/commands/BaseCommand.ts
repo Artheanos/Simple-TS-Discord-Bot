@@ -1,4 +1,4 @@
-import { Client, Guild, Message, TextChannel } from 'discord.js'
+import { Client, Guild, TextChannel } from 'discord.js'
 
 import config from 'config'
 import { awaitIfPromise } from 'utils/async'
@@ -33,7 +33,7 @@ export abstract class BaseCommand {
     protected static validator?: Type<BaseValidator>
     protected static ownerOnly = false
 
-    public message: Message
+    public message: TextChannelMessage
     public channel: TextChannel
     public guild: Guild
     public args: string[]

@@ -7,7 +7,7 @@ const mockedAxios = axios as jest.Mocked<typeof axios>
 
 describe('findMp3s', () => {
     it('finds mp3s', async () => {
-        mockedAxios.get.mockResolvedValueOnce({ data: fs.readFileSync('./tests/fixtures/myinstants-1.html').toString() })
+        mockedAxios.get.mockResolvedValueOnce({ data: fs.readFileSync('./test/fixtures/myinstants-1.html').toString() })
 
         const result = await findMp3Paths('dupa')
         expect(result).toEqual(expectedMp3s)

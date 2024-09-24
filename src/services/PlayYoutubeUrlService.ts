@@ -7,7 +7,7 @@ import { QueuedTrack } from 'lib/guildStorage/types'
 import { EnqueueTrackService } from 'services/EnqueueTrackService'
 
 export class PlayYoutubeUrlService {
-    constructor(private message: Message, private track: string) {
+    constructor(private message: Message<true>, private track: string) {
     }
 
     async call(): Promise<void> {
