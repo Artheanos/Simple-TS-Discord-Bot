@@ -17,4 +17,4 @@ RUN npx prisma generate
 RUN npm run build
 
 VOLUME ["/app/data"]
-CMD ["node", "dist/src/app.js"]
+CMD ["npm", "start"]
