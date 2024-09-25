@@ -1,9 +1,26 @@
 import { getTitle } from '../../../src/lib/yt-dlp'
 
-jest.setTimeout(10_000)
+import { spawn } from 'child_process'
+import Mock = jest.Mock;
+import { ReadableMock } from '../../helpers'
+
+const spawnMock = spawn as Mock
+
+jest.mock('child_process', () => ({
+    spawn: jest.fn(),
+}))
 
 describe('getTitle', () => {
-    it('elo', () => {
-        expect(getTitle('https://www.youtube.com/watch?v=fwlTGuOxfoA')).toEqual('We shot some B-Ball in West Philly, and angered a Brooklyn gangster (How NOT to Travel America #3)')
+    it('executes yt-dlp', async () => {
+        const readable = new ReadableMock()
+        spawnMock.mockImplementation(() => ({
+            stdout: readable,
+        }))
+        getTitle('https://www.youtube.com/watch?v=fwlTGuOxfoA').then(result => {
+            expect(result).toEqual('Video Title!')
+        })
+        readable.dataListener('Video Title!')
+        readable.dataListener('Some data')
+        readable.closeListener()
     })
 })
